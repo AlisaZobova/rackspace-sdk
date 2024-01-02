@@ -43,7 +43,7 @@ abstract class NovaResource extends PersistentResource
 
         // get the URL for the POST message
         $url = clone $this->getUrl();
-        $url->addPath('action');
+        $url->withPath($url->getPath().'action');
 
         // POST the message
         return $this->getClient()->post($url, self::getJsonHeader(), $json)->send();

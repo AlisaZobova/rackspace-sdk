@@ -17,7 +17,8 @@
 
 namespace OpenCloud\Identity;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Query;
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Collection\PaginatedIterator;
 use OpenCloud\Common\Collection\ResourceIterator;
@@ -56,14 +57,16 @@ class Service extends AbstractService
     /**
      * Get this service's URL, with appended path if necessary.
      *
-     * @return \Guzzle\Http\Url
+     * @return \GuzzleHttp\Psr7\Uri
      */
     public function getUrl($path = null)
     {
         $url = clone $this->getEndpoint();
 
         if ($path) {
-            $url->addPath($path);
+
+            // TODO withPath not found
+            $url = $url->withPath($url->getPath().$path);
         }
 
         return $url;
@@ -105,16 +108,18 @@ class Service extends AbstractService
     {
         $url = $this->getUrl('users');
 
+        $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
+
         switch ($mode) {
             default:
             case UserConst::MODE_NAME:
-                $url->setQuery(array('name' => $search));
+                $url = $url->withQuery($existingQuery.Query::build(array('name' => $search)));
                 break;
             case UserConst::MODE_ID:
-                $url->addPath($search);
+                $url = $url->withPath($url->getPath().$search);
                 break;
             case UserConst::MODE_EMAIL:
-                $url->setQuery(array('email' => $search));
+                $url = $url->withQuery($existingQuery.Query::build(array('email' => $search)));
                 break;
         }
 
@@ -145,9 +150,10 @@ class Service extends AbstractService
      */
     public function getRoles()
     {
+        // TODO check path
         return PaginatedIterator::factory($this, array(
             'resourceClass'  => 'Role',
-            'baseUrl'        => $this->getUrl()->addPath('OS-KSADM')->addPath('roles'),
+            'baseUrl'        => $this->getUrl()->withPath($this->getUrl()->getPath().'OS-KSADM/roles'),
             'key.marker'     => 'id',
             'key.collection' => 'roles'
         ));
@@ -169,16 +175,16 @@ class Service extends AbstractService
      *
      * @param   $json    string The JSON data-structure used in the HTTP entity body when POSTing to the API
      * @headers $headers array  Additional headers to send (optional)
-     * @return  \Guzzle\Http\Message\Response
+     * @return  \Psr\Http\Message\ResponseInterface
      */
     public function generateToken($json, array $headers = array())
     {
         $url = $this->getUrl();
-        $url->addPath('tokens');
+        $url = $url->withPath($url->getPath().'tokens');
 
         $headers += self::getJsonHeader();
 
-        return $this->getClient()->post($url, $headers, $json)->send();
+        return $this->getClient()->post($url, ['headers' => $headers, 'json' => json_decode($json, true)]);
     }
 
     /**
@@ -203,7 +209,7 @@ class Service extends AbstractService
     public function getTenants()
     {
         $url = $this->getUrl();
-        $url->addPath('tenants');
+        $url->withPath($url->getPath().'tenants');
 
         $response = $this->getClient()->get($url)->send();
 

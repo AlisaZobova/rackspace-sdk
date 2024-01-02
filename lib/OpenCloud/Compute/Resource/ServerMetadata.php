@@ -98,7 +98,7 @@ class ServerMetadata extends Metadata
             );
         }
 
-        return Url::factory($this->url)->addPath($this->key);
+        return Url::factory($this->url)->withPath($url->getPath().$this->key);
     }
 
     /**

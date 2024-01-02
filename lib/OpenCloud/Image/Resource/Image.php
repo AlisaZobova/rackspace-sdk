@@ -124,7 +124,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function listMembers(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Member::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Member::resourceName())->setQuery($params);
 
         return $this->getService()->resourceList('Member', $url, $this);
     }
@@ -158,8 +158,8 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function getMember($memberId)
     {
         $url = clone $this->getUrl();
-        $url->addPath('members');
-        $url->addPath((string) $memberId);
+        $url->withPath($url->getPath().'members');
+        $url->withPath($url->getPath().(string) $memberId);
 
         $data = $this->getClient()->get($url)->send()->json();
 
@@ -175,7 +175,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function createMember($tenantId)
     {
         $url = $this->getUrl();
-        $url->addPath('members');
+        $url->withPath($url->getPath().'members');
 
         $json = json_encode(array('member' => $tenantId));
         return $this->getClient()->post($url, self::getJsonHeader(), $json)->send();
@@ -190,8 +190,8 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function deleteMember($tenantId)
     {
         $url = $this->getUrl();
-        $url->addPath('members');
-        $url->addPath((string)$tenantId);
+        $url->withPath($url->getPath().'members');
+        $url->withPath($url->getPath().(string)$tenantId);
 
         return $this->getClient()->delete($url)->send();
     }
@@ -205,7 +205,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function addTag($tag)
     {
         $url = clone $this->getUrl();
-        $url->addPath('tags')->addPath((string) $tag);
+        $url->withPath($url->getPath().'tags')->withPath($url->getPath().(string) $tag);
 
         return $this->getClient()->put($url)->send();
     }
@@ -219,7 +219,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function deleteTag($tag)
     {
         $url = clone $this->getUrl();
-        $url->addPath('tags')->addPath((string) $tag);
+        $url->withPath($url->getPath().'tags')->withPath($url->getPath().(string) $tag);
 
         return $this->getClient()->delete($url)->send();
     }

@@ -73,7 +73,7 @@ class Service extends CatalogService
     {
         // Form URL
         $url = clone $this->getUrl();
-        $url->addPath(Network::resourceName());
+        $url->withPath($url->getPath().Network::resourceName());
 
         // Form JSON
         $singleNetworkJsonName = Network::jsonName();
@@ -119,7 +119,7 @@ class Service extends CatalogService
     public function listNetworks(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Network::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Network::resourceName())->setQuery($params);
 
         return $this->resourceList('Network', $url);
     }
@@ -160,7 +160,7 @@ class Service extends CatalogService
     {
         // Form URL
         $url = clone $this->getUrl();
-        $url->addPath(Subnet::resourceName());
+        $url->withPath($url->getPath().Subnet::resourceName());
 
         // Form JSON
         $singleSubnetJsonName = Subnet::jsonName();
@@ -206,7 +206,7 @@ class Service extends CatalogService
     public function listSubnets(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Subnet::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Subnet::resourceName())->setQuery($params);
 
         return $this->resourceList('Subnet', $url);
     }
@@ -247,7 +247,7 @@ class Service extends CatalogService
     {
         // Form URL
         $url = clone $this->getUrl();
-        $url->addPath(Port::resourceName());
+        $url->withPath($url->getPath().Port::resourceName());
 
         // Form JSON
         $singlePortJsonName = Port::jsonName();
@@ -293,7 +293,7 @@ class Service extends CatalogService
     public function listPorts(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Port::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Port::resourceName())->setQuery($params);
 
         return $this->resourceList('Port', $url);
     }
@@ -344,7 +344,7 @@ class Service extends CatalogService
     public function listSecurityGroups(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(SecurityGroup::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().SecurityGroup::resourceName())->setQuery($params);
 
         return $this->resourceList('SecurityGroup', $url);
     }
@@ -395,7 +395,7 @@ class Service extends CatalogService
     public function listSecurityGroupRules(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(SecurityGroupRule::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().SecurityGroupRule::resourceName())->setQuery($params);
 
         return $this->resourceList('SecurityGroupRule', $url);
     }

@@ -8,6 +8,5 @@ vendor/
 *.log
 *.phar
 .DS_Store
-composer.lock
 composer.phar
 phpunit.xml

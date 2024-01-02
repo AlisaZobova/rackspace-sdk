@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Common\Service;
 
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7\Uri;
 use OpenCloud\OpenStack;
 use OpenCloud\Common\Http\Message\Formatter;
 use OpenCloud\Common\Exceptions\UnsupportedVersionError;
@@ -31,12 +31,12 @@ use OpenCloud\Common\Exceptions\UnsupportedVersionError;
 class Endpoint
 {
     /**
-     * @var \Guzzle\Http\Url
+     * @var \GuzzleHttp\Psr7\Uri
      */
     private $publicUrl;
 
     /**
-     * @var \Guzzle\Http\Url
+     * @var \GuzzleHttp\Psr7\Uri
      */
     private $privateUrl;
 
@@ -72,7 +72,7 @@ class Endpoint
      * @param $publicUrl
      * @return $this
      */
-    public function setPublicUrl(Url $publicUrl)
+    public function setPublicUrl(Uri $publicUrl)
     {
         $this->publicUrl = $publicUrl;
 
@@ -80,7 +80,7 @@ class Endpoint
     }
 
     /**
-     * @return Url
+     * @return Uri
      */
     public function getPublicUrl()
     {
@@ -91,7 +91,7 @@ class Endpoint
      * @param $privateUrl
      * @return $this
      */
-    public function setPrivateUrl(Url $privateUrl)
+    public function setPrivateUrl(Uri $privateUrl)
     {
         $this->privateUrl = $privateUrl;
 
@@ -99,7 +99,7 @@ class Endpoint
     }
 
     /**
-     * @return Url
+     * @return Uri
      */
     public function getPrivateUrl()
     {
@@ -131,21 +131,21 @@ class Endpoint
      * @param string $url Endpoint URL
      * @param string $supportedServiceVersion Service version supported by the SDK
      * @param OpenCloud\OpenStack $client OpenStack client
-     * @return Guzzle/Http/Url Endpoint URL with version in it
+     * @return \GuzzleHttp\Psr7\Uri Endpoint URL with version in it
      */
     private function getVersionedUrl($url, $supportedServiceVersion, OpenStack $client)
     {
         $versionRegex = '/\/[vV][0-9][0-9\.]*/';
         if (1 === preg_match($versionRegex, $url)) {
             // URL has version in it; use it as-is
-            return Url::factory($url);
+            return new Uri($url);
         }
 
         // If there is no version in $url but no $supportedServiceVersion
         // is specified, just return $url as-is but log a warning
         if (is_null($supportedServiceVersion)) {
             $client->getLogger()->warning('Service version supported by SDK not specified. Using versionless service URL as-is, without negotiating version.');
-            return Url::factory($url);
+            return new Uri($url);
         }
 
         // Make GET request to URL
@@ -161,7 +161,7 @@ class Endpoint
                 && $version->id == $supportedServiceVersion) {
                 foreach ($version->links as $link) {
                     if ($link->rel == 'self') {
-                        return Url::factory($link->href);
+                        return new Uri($link->href);
                     }
                 }
             }

@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Common\Service;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Collection\PaginatedIterator;
 use OpenCloud\Common\Exceptions;

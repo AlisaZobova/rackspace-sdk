@@ -111,9 +111,9 @@ class PtrRecord extends Record
         }
 
         $url = clone $this->getUrl();
-        $url->addPath('..')
+        $url->withPath($url->getPath().'..')
             ->normalizePath()
-            ->addPath($this->link_rel)
+            ->withPath($url->getPath().$this->link_rel)
             ->setQuery($params);
 
         $response = $this->getClient()->delete($url)->send();

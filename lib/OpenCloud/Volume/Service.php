@@ -48,7 +48,7 @@ class Service extends NovaService
         $url = clone $this->getUrl(Resource\Volume::ResourceName());
 
         if ($details === true) {
-            $url->addPath('detail');
+            $url->withPath($url->getPath().'detail');
         }
 
         $url->setQuery($filter);
@@ -98,7 +98,7 @@ class Service extends NovaService
     public function snapshotList($filter = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Snapshot::resourceName())->setQuery($filter);
+        $url->withPath($url->getPath().Snapshot::resourceName())->setQuery($filter);
 
         return $this->resourceList('Snapshot', $url);
     }

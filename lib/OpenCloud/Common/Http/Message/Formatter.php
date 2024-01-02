@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Common\Http\Message;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Common\Constants\Header;
 use OpenCloud\Common\Constants\Mime;
 use OpenCloud\Common\Exceptions\JsonError;
@@ -26,7 +26,7 @@ class Formatter
 {
     public static function decode(Response $response)
     {
-        if (strpos($response->getHeader(Header::CONTENT_TYPE), Mime::JSON) !== false) {
+        if (strpos($response->getHeader(Header::CONTENT_TYPE)[0], Mime::JSON) !== false) {
             $string = (string) $response->getBody();
             $response = json_decode($string);
             self::checkJsonError($string);

@@ -140,7 +140,7 @@ abstract class PersistentResource extends BaseResource
     protected function refreshFromParent()
     {
         $url = clone $this->getParent()->getUrl();
-        $url->addPath($this->resourceName());
+        $url->withPath($url->getPath().$this->resourceName());
 
         $response = $this->getClient()->get($url)->send();
 

@@ -83,7 +83,7 @@ class Service extends CatalogService
         $params['limit'] = isset($params['limit']) && $params['limit'] <= self::MAX_LIMIT ?: self::MAX_LIMIT;
 
         $url = clone $this->getUrl();
-        $url->addPath(ServiceResource::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().ServiceResource::resourceName())->setQuery($params);
 
         return $this->resourceList('Service', $url);
     }
@@ -133,7 +133,7 @@ class Service extends CatalogService
     public function listFlavors(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Flavor::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Flavor::resourceName())->setQuery($params);
 
         return $this->resourceList('Flavor', $url);
     }
@@ -164,7 +164,7 @@ class Service extends CatalogService
     public function getPing()
     {
         $url = clone $this->getUrl();
-        $url->addPath('ping');
+        $url->withPath($url->getPath().'ping');
 
         $request = $this->getClient()->get($url);
 

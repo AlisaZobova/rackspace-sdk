@@ -109,8 +109,8 @@ class Service extends CatalogService
     public function ptrRecordList(HasPtrRecordsInterface $parent)
     {
         $url = $this->getUrl()
-            ->addPath('rdns')
-            ->addPath($parent->getService()->getName())
+            ->withPath($url->getPath().'rdns')
+            ->withPath($url->getPath().$parent->getService()->getName())
             ->setQuery(array('href' => (string) $parent->getUrl()));
 
         return $this->resourceList('PtrRecord', $url);
@@ -151,8 +151,8 @@ class Service extends CatalogService
     public function import($data)
     {
         $url = clone $this->getUrl();
-        $url->addPath('domains');
-        $url->addPath('import');
+        $url->withPath($url->getPath().'domains');
+        $url->withPath($url->getPath().'import');
 
         $object = (object) array(
             'domains' => array(
@@ -178,7 +178,7 @@ class Service extends CatalogService
         $url = $this->getUrl('limits');
 
         if ($type) {
-            $url->addPath($type);
+            $url->withPath($url->getPath().$type);
         }
 
         $response = $this->getClient()->get($url)->send();
@@ -210,7 +210,7 @@ class Service extends CatalogService
     public function listAsyncJobs(array $query = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath('status');
+        $url->withPath($url->getPath().'status');
         $url->setQuery($query);
 
         return DnsIterator::factory($this, array(
@@ -223,8 +223,8 @@ class Service extends CatalogService
     public function getAsyncJob($jobId, $showDetails = true)
     {
         $url = clone $this->getUrl();
-        $url->addPath('status');
-        $url->addPath((string) $jobId);
+        $url->withPath($url->getPath().'status');
+        $url->withPath($url->getPath().(string) $jobId);
         $url->setQuery(array('showDetails' => ($showDetails) ? 'true' : 'false'));
 
         $response = $this->getClient()->get($url)->send();

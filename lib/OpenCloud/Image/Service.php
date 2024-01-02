@@ -40,7 +40,7 @@ class Service extends CatalogService
     public function listImages(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Image::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Image::resourceName())->setQuery($params);
 
         return $this->resourceList('Image', $url);
     }
@@ -84,7 +84,7 @@ class Service extends CatalogService
     {
         $url = clone $this->getUrl();
 
-        return $url->addPath('schemas')->addPath($path);
+        return $url->withPath($url->getPath().'schemas')->withPath($url->getPath().$path);
     }
 
     /**

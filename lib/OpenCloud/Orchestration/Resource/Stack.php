@@ -130,7 +130,7 @@ class Stack extends PersistentResource
 
         $previewUrl = $this->previewUrl();
         $response = $this->getClient()->post($previewUrl, self::getJsonHeader(), $json)->send();
-        
+
         $decoded = $this->parseResponse($response);
         $this->populate($decoded);
 
@@ -169,7 +169,7 @@ class Stack extends PersistentResource
     public function listResources(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Resource::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Resource::resourceName())->setQuery($params);
 
         return $this->getService()->resourceList('Resource', $url, $this);
     }
@@ -183,7 +183,7 @@ class Stack extends PersistentResource
     public function listEvents(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->addPath(Event::resourceName())->setQuery($params);
+        $url->withPath($url->getPath().Event::resourceName())->setQuery($params);
 
         return $this->getService()->resourceList('Event', $url, $this);
     }
@@ -204,7 +204,7 @@ class Stack extends PersistentResource
     public function getStackTemplate()
     {
         $url = clone $this->getUrl();
-        $url->addPath('template');
+        $url->withPath($url->getPath().'template');
 
         $response = $this->getClient()->get($url)->send();
         return $response->getBody(true);
@@ -213,7 +213,7 @@ class Stack extends PersistentResource
     protected function previewUrl()
     {
         $url = clone $this->getParent()->getUrl();
-        $url->addPath(self::resourceName());
+        $url->withPath($url->getPath().self::resourceName());
         $url->addPath('preview');
 
         return $url;

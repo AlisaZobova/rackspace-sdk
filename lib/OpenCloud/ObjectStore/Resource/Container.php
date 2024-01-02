@@ -22,6 +22,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Url;
+use GuzzleHttp\Exception\ClientException;
 use OpenCloud\Common\Constants\Size;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Service\ServiceInterface;
@@ -334,7 +335,7 @@ class Container extends AbstractContainer
 
     public function refresh($id = null, $url = null)
     {
-        $headers = $this->createRefreshRequest()->send()->getHeaders();
+        $headers = $this->createRefreshRequest()->getHeaders();
         $this->setMetadata($headers, true);
     }
 
@@ -419,7 +420,7 @@ class Container extends AbstractContainer
         try {
             // Send HEAD request to check resource existence
             $url = clone $this->getUrl();
-            $url->addPath((string) $name);
+            $url->withPath($url->getPath().(string) $name);
             $this->getClient()->head($url)->send();
         } catch (ClientErrorResponseException $e) {
             // If a 404 was returned, then the object doesn't exist
@@ -446,7 +447,7 @@ class Container extends AbstractContainer
         $entityBody = EntityBody::factory($data);
 
         $url = clone $this->getUrl();
-        $url->addPath($name);
+        $url->withPath($url->getPath().$name);
 
         // @todo for new major release: Return response rather than populated DataObject
 
@@ -507,7 +508,7 @@ class Container extends AbstractContainer
             $headers = (isset($entity['headers'])) ? $entity['headers'] : $commonHeaders;
 
             $url = clone $this->getUrl();
-            $url->addPath($entity['name']);
+            $url->withPath($url->getPath().$entity['name']);
 
             $requests[] = $this->getClient()->put($url, $headers, $entityBody);
         }
@@ -606,18 +607,18 @@ class Container extends AbstractContainer
         try {
             if (null !== ($cdnService = $this->getService()->getCDNService())) {
                 $cdn = new CDNContainer($cdnService);
-                $cdn->setName($this->name);
+                $cdn->name = $this->name;
 
-                $response = $cdn->createRefreshRequest()->send();
+                $response = $cdn->createRefreshRequest();
 
-                if ($response->isSuccessful()) {
+                if ($response->getStatusCode() === 204) {
                     $this->cdn = $cdn;
                     $this->cdn->setMetadata($response->getHeaders(), true);
                 }
             } else {
                 $this->cdn = null;
             }
-        } catch (ClientErrorResponseException $e) {
+        } catch (ClientException $e) {
         }
     }
 }

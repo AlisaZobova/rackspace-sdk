@@ -182,7 +182,7 @@ class Service extends AbstractService
             ));
         }
 
-        $url = $this->getUrl()->addPath($path)->setQuery(array('extract-archive' => $archiveType));
+        $url = $this->getUrl()->withPath($url->getPath().$path)->setQuery(array('extract-archive' => $archiveType));
         $response = $this->getClient()->put($url, array(Header::CONTENT_TYPE => ''), $entity)->send();
 
         $body = Formatter::decode($response);

@@ -54,7 +54,7 @@ class ScalingPolicy extends AbstractResource
     public function createWebhooks(array $webhooks)
     {
         $url = clone $this->getUrl();
-        $url->addPath('webhooks');
+        $url->withPath($url->getPath().'webhooks');
 
         $body = json_encode($webhooks);
         $this->checkJsonError();

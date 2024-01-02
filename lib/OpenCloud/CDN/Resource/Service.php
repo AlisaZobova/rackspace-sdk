@@ -87,7 +87,7 @@ class Service extends PersistentResource
     protected function assetsUrl()
     {
         $url = clone $this->getUrl();
-        $url->addPath('assets');
+        $url->withPath($url->getPath().'assets');
 
         return $url;
     }

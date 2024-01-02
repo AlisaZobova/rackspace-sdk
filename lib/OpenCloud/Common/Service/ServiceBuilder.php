@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Common\Service;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use OpenCloud\Common\Exceptions\ServiceException;
 
 /**
@@ -28,7 +28,7 @@ class ServiceBuilder
     /**
      * Simple factory method for creating services.
      *
-     * @param Client $client  The HTTP client object
+     * @param ClientInterface $client  The HTTP client object
      * @param string $class   The class name of the service
      * @param array  $options The options.
      * @return \OpenCloud\Common\Service\ServiceInterface

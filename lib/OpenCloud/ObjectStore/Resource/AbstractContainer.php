@@ -17,6 +17,7 @@
 
 namespace OpenCloud\ObjectStore\Resource;
 
+use GuzzleHttp\Psr7\Uri;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Service\ServiceInterface;
 use OpenCloud\ObjectStore\Constants\Header as HeaderConst;
@@ -96,7 +97,7 @@ abstract class AbstractContainer extends AbstractResource
      *
      * @param string $path Path to add to URL. Optional.
      * @param array $params Query parameters to add to URL. Optional.
-     * @return Url URL of this container + path + query parameters.
+     * @return \Psr\Http\Message\UriInterface URL of this container + path + query parameters.
      */
     public function getUrl($path = null, array $params = array())
     {
@@ -106,7 +107,17 @@ abstract class AbstractContainer extends AbstractResource
 
         $url = $this->getService()->getUrl();
 
-        return $url->addPath((string) $this->getName())->addPath((string) $path)->setQuery($params);
+        $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
+
+        $currentPath = $url->getPath();
+
+        if (substr($currentPath, -1) !== '/') {
+            // If not, append a forward slash to the end of the path
+            $currentPath .= '/';
+        }
+
+
+        return $url->withPath($currentPath.(string) $this->getName().'/'.$path)->withQuery($existingQuery.\GuzzleHttp\Psr7\Query::build($params));
     }
 
     protected function createRefreshRequest()

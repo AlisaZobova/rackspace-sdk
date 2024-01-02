@@ -205,7 +205,7 @@ class Group extends AbstractResource
     public function createScalingPolicies(array $policies)
     {
         $url = clone $this->getUrl();
-        $url->addPath('policies');
+        $url->withPath($url->getPath().'policies');
 
         $body = json_encode($policies);
         $this->checkJsonError();

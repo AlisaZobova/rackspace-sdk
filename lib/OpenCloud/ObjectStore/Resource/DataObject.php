@@ -77,7 +77,7 @@ class DataObject extends AbstractResource
      * @var string Etag.
      */
     protected $etag;
-    
+
     /**
      * @var string Manifest. Can be null so we use false to mean unset.
      */
@@ -301,7 +301,7 @@ class DataObject extends AbstractResource
     {
         return $this->etag ? : $this->content->getContentMd5();
     }
-    
+
     /**
      * @param string $manifest Path (`container/object') to set as the value to X-Object-Manifest
      * @return $this
@@ -383,7 +383,7 @@ class DataObject extends AbstractResource
     {
         return $this->getService()->getClient()->delete($this->getUrl())->send();
     }
-    
+
     /**
      * Create a symlink to another named object from this object. Requires this object to be empty.
      *
@@ -506,7 +506,7 @@ class DataObject extends AbstractResource
         }
 
         $url = clone $cdn->getUrl();
-        $url->addPath($this->name);
+        $url->withPath($url->getPath().$this->name);
 
         $headers = ($email !== null) ? array('X-Purge-Email' => $email) : array();
 
@@ -539,7 +539,7 @@ class DataObject extends AbstractResource
                 break;
         }
 
-        return (isset($uri)) ? Url::factory($uri)->addPath($this->name) : false;
+        return (isset($uri)) ? Url::factory($uri)->withPath($url->getPath().$this->name) : false;
     }
 
     protected static function headerIsValidMetadata($header)
@@ -548,7 +548,7 @@ class DataObject extends AbstractResource
 
         return preg_match($pattern, $header);
     }
-    
+
     /**
      * @return null|string
      */
@@ -558,11 +558,11 @@ class DataObject extends AbstractResource
             ->getClient()
             ->head($this->getUrl())
             ->send();
-            
+
         $manifest = $response->getHeader(HeaderConst::X_OBJECT_MANIFEST);
-        
+
         $this->setManifest($manifest);
-        
+
         return $manifest;
     }
 }

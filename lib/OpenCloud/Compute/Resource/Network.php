@@ -131,7 +131,7 @@ class Network extends PersistentResource implements NetworkInterface
             $url = $this->getParent()->getUrl($this->getResourcePath());
 
             if (null !== ($primaryKey = $this->getProperty($this->primaryKeyField()))) {
-                $url->addPath($primaryKey);
+                $url->withPath($url->getPath().$primaryKey);
             }
         }
 
@@ -139,7 +139,7 @@ class Network extends PersistentResource implements NetworkInterface
             $url = Url::factory($url);
         }
 
-        return $url->addPath($path)->setQuery($query);
+        return $url->withPath($url->getPath().$path)->setQuery($query);
     }
 
     /**

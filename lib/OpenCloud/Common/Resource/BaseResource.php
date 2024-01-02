@@ -154,7 +154,7 @@ abstract class BaseResource extends Base
 
             // Does it have a primary key?
             if (null !== ($primaryKey = $this->getProperty($this->primaryKeyField()))) {
-                $url->addPath((string) $primaryKey);
+                $url->withPath($url->getPath().(string) $primaryKey);
             }
         }
 
@@ -162,7 +162,7 @@ abstract class BaseResource extends Base
             $url = Url::factory($url);
         }
 
-        return $url->addPath((string) $path)->setQuery($query);
+        return $url->withPath($url->getPath().(string) $path)->setQuery($query);
     }
 
     /**

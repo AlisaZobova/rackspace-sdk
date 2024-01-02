@@ -17,9 +17,9 @@
 
 namespace OpenCloud\Common\Service;
 
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Exception\BadResponseException;
-use Guzzle\Http\Url;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Psr7\Uri;
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Http\Message\Formatter;
@@ -80,7 +80,6 @@ abstract class CatalogService extends AbstractService
         $this->setClient($client);
 
         $this->name = $name ? : static::DEFAULT_NAME;
-        $this->region = $region;
 
         $this->region = $region;
         if ($this->regionless !== true && !$this->region) {
@@ -155,13 +154,22 @@ abstract class CatalogService extends AbstractService
      *
      * @param  string $path  URL path segment
      * @param  array  $query Array of query pairs
-     * @return Guzzle\Http\Url
+     * @return Uri
      */
     public function getUrl($path = null, array $query = array())
     {
-        return Url::factory($this->getBaseUrl())
-            ->addPath($path)
-            ->setQuery($query);
+        $url = $this->getBaseUrl();
+
+        if ($path) {
+            $url = $url->withPath($url->getPath().$path);
+        }
+
+        if (!empty($query)) {
+            $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
+            $url = $url->withQuery($existingQuery.\GuzzleHttp\Psr7\Query::build($query));
+        }
+
+        return new Uri($url);
     }
 
     /**
@@ -242,7 +250,7 @@ abstract class CatalogService extends AbstractService
     private function getMetaUrl($resource)
     {
         $url = clone $this->getBaseUrl();
-        $url->addPath($resource);
+        $url->withPath($url->getPath().$resource);
         try {
             $response = $this->getClient()->get($url)->send();
 
@@ -256,7 +264,7 @@ abstract class CatalogService extends AbstractService
 
     /**
      * Get the base URL for this service, based on the set URL type.
-     * @return \Guzzle\Http\Url
+     * @return \GuzzleHttp\Psr7\Uri
      * @throws \OpenCloud\Common\Exceptions\ServiceException
      */
     public function getBaseUrl()

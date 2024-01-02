@@ -247,7 +247,7 @@ class User extends PersistentObject
     public function getOtherCredentials()
     {
         $url = $this->getUrl();
-        $url->addPath('OS-KSADM')->addPath('credentials');
+        $url->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().'credentials');
 
         $response = $this->getClient()->get($url)->send();
 
@@ -264,7 +264,7 @@ class User extends PersistentObject
     public function getApiKey()
     {
         $url = $this->getUrl();
-        $url->addPath('OS-KSADM')->addPath('credentials')->addPath('RAX-KSKEY:apiKeyCredentials');
+        $url->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().'credentials')->withPath($url->getPath().'RAX-KSKEY:apiKeyCredentials');
 
         $response = $this->getClient()->get($url)->send();
 
@@ -283,11 +283,11 @@ class User extends PersistentObject
     public function resetApiKey()
     {
         $url = $this->getUrl();
-        $url->addPath('OS-KSADM')
-            ->addPath('credentials')
-            ->addPath('RAX-KSKEY:apiKeyCredentials')
-            ->addPath('RAX-AUTH')
-            ->addPath('reset');
+        $url->withPath($url->getPath().'OS-KSADM')
+            ->withPath($url->getPath().'credentials')
+            ->withPath($url->getPath().'RAX-KSKEY:apiKeyCredentials')
+            ->withPath($url->getPath().'RAX-AUTH')
+            ->withPath($url->getPath().'reset');
 
         $response = $this->getClient()->post($url)->send();
 
@@ -307,7 +307,7 @@ class User extends PersistentObject
     public function addRole($roleId)
     {
         $url = $this->getUrl();
-        $url->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
+        $url->withPath($url->getPath().'roles')->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().$roleId);
 
         return $this->getClient()->put($url)->send();
     }
@@ -321,7 +321,7 @@ class User extends PersistentObject
     public function removeRole($roleId)
     {
         $url = $this->getUrl();
-        $url->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
+        $url->withPath($url->getPath().'roles')->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().$roleId);
 
         return $this->getClient()->delete($url)->send();
     }
@@ -334,7 +334,7 @@ class User extends PersistentObject
     public function getRoles()
     {
         $url = $this->getUrl();
-        $url->addPath('roles');
+        $url->withPath($url->getPath().'roles');
 
         return PaginatedIterator::factory($this, array(
             'baseUrl'        => $url,

@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Common\Service;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 
 interface ServiceInterface
 {

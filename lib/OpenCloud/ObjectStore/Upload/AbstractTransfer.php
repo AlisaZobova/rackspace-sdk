@@ -235,7 +235,7 @@ class AbstractTransfer
         );
 
         $url = clone $this->options['containerUrl'];
-        $url->addPath($this->options['objectName']);
+        $url->withPath($url->getPath().$this->options['objectName']);
 
         return $this->client->put($url, $headers)->send();
     }

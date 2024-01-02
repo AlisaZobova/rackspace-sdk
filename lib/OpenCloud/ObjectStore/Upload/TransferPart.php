@@ -137,7 +137,7 @@ class TransferPart
     {
         $name = sprintf('%s/%s/%05d', $options['objectName'], $options['prefix'], $number);
         $url = clone $options['containerUrl'];
-        $url->addPath($name);
+        $url->withPath($url->getPath().$name);
 
         $headers = array(
             Header::CONTENT_LENGTH => $part->getContentLength(),

@@ -145,7 +145,7 @@ class DirectorySync
             } else {
                 // upload new file
                 $url = clone $this->container->getUrl();
-                $url->addPath($remoteFilename);
+                $url->withPath($url->getPath().$remoteFilename);
 
                 $requests[] = $this->container->getClient()->put($url, array(), $entityBody);
             }
