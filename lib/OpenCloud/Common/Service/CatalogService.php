@@ -23,6 +23,7 @@ use GuzzleHttp\Psr7\Uri;
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Http\Message\Formatter;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\OpenStack;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -154,22 +155,20 @@ abstract class CatalogService extends AbstractService
      *
      * @param  string $path  URL path segment
      * @param  array  $query Array of query pairs
-     * @return Uri
+     * @return \Psr\Http\Message\UriInterface
      */
     public function getUrl($path = null, array $query = array())
     {
         $url = $this->getBaseUrl();
 
         if ($path) {
-            $url = $url->withPath($url->getPath().$path);
+            $url = $url->addPath($path);
         }
 
-        if (!empty($query)) {
-            $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
-            $url = $url->withQuery($existingQuery.\GuzzleHttp\Psr7\Query::build($query));
-        }
+        $url = $url->addQuery($query);
 
-        return new Uri($url);
+
+        return Url::factory($url);
     }
 
     /**
@@ -250,7 +249,7 @@ abstract class CatalogService extends AbstractService
     private function getMetaUrl($resource)
     {
         $url = clone $this->getBaseUrl();
-        $url->withPath($url->getPath().$resource);
+        $url = $url->addPath($resource);
         try {
             $response = $this->getClient()->get($url)->send();
 

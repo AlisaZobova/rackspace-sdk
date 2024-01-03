@@ -17,13 +17,13 @@
 
 namespace OpenCloud\Tests;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Rackspace;
 
 abstract class OpenCloudTestCase extends \PHPUnit_Framework_TestCase
 {
     const COLLECTION_CLASS = 'OpenCloud\Common\Collection\ResourceIterator';
-    const RESPONSE_CLASS = 'Guzzle\Http\Message\Response';
+    const RESPONSE_CLASS = 'GuzzleHttp\Psr7\Response';
 
     const ANNOTATION_FILE = 'mockFile';
     const ANNOTATION_PATH = 'mockPath';
@@ -114,7 +114,7 @@ abstract class OpenCloudTestCase extends \PHPUnit_Framework_TestCase
 
     public function isResponse($object)
     {
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $object);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $object);
     }
 
     public function isCollection($object)

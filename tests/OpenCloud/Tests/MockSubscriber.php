@@ -19,7 +19,7 @@ namespace OpenCloud\Tests;
 
 use Guzzle\Common\Event;
 use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

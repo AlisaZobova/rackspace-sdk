@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\Image\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Image\Enum\MemberStatus;
 use OpenCloud\Image\Resource\Member;
 use OpenCloud\Tests\OpenCloudTestCase;
@@ -73,7 +73,7 @@ class MemberTest extends OpenCloudTestCase
 
         $response = $this->member->updateStatus(MemberStatus::ACCEPTED);
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 
     public function test_Delete()
@@ -82,6 +82,6 @@ class MemberTest extends OpenCloudTestCase
 
         $response = $this->member->delete();
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 }

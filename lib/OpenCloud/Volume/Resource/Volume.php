@@ -70,7 +70,7 @@ class Volume extends PersistentResource
      * Rename either the `display_description` or the `display_name` properties
      *
      * @param array $params
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws \InvalidArgumentException
      */
     public function rename(array $params = array())
@@ -85,7 +85,7 @@ class Volume extends PersistentResource
             } else {
                 throw new \InvalidArgumentException(sprintf(
                     'You cannot update the %s volume property. Valid keys are: %s',
-                    $key, implode($keys, ',')
+                    $key, implode(',', $keys)
                 ));
             }
         }

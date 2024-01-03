@@ -17,12 +17,12 @@
 
 namespace OpenCloud\ObjectStore\Upload;
 
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7\Response;
+
 use OpenCloud\Common\Constants\Header;
 
 /**
- * Represents an individual part of the EntityBody being uploaded.
+ * Represents an individual part of the Stream being uploaded.
  *
  * @codeCoverageIgnore
  */
@@ -127,7 +127,7 @@ class TransferPart
     /**
      * Create the request needed for this upload to the API.
      *
-     * @param EntityBody $part    The entity body being uploaded
+     * @param Stream $part    The entity body being uploaded
      * @param int        $number  Its number/position, needed for name
      * @param OpenStack  $client  Client responsible for issuing requests
      * @param array      $options Set by the Transfer object
@@ -137,7 +137,7 @@ class TransferPart
     {
         $name = sprintf('%s/%s/%05d', $options['objectName'], $options['prefix'], $number);
         $url = clone $options['containerUrl'];
-        $url->withPath($url->getPath().$name);
+        $url = $url->addPath($name);
 
         $headers = array(
             Header::CONTENT_LENGTH => $part->getContentLength(),

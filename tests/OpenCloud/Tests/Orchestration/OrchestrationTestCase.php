@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\Orchestration;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Tests\OpenCloudTestCase;
 
 class OrchestrationTestCase extends OpenCloudTestCase

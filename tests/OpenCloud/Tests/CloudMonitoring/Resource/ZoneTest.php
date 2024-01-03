@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\CloudMonitoring\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Tests\CloudMonitoring\CloudMonitoringTestCase;
 
 class ZoneTest extends CloudMonitoringTestCase

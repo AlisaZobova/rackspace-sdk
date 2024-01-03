@@ -18,6 +18,7 @@
 namespace OpenCloud\Common\Service;
 
 use GuzzleHttp\Psr7\Uri;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\OpenStack;
 use OpenCloud\Common\Http\Message\Formatter;
 use OpenCloud\Common\Exceptions\UnsupportedVersionError;
@@ -138,14 +139,14 @@ class Endpoint
         $versionRegex = '/\/[vV][0-9][0-9\.]*/';
         if (1 === preg_match($versionRegex, $url)) {
             // URL has version in it; use it as-is
-            return new Uri($url);
+            return Url::factory($url);
         }
 
         // If there is no version in $url but no $supportedServiceVersion
         // is specified, just return $url as-is but log a warning
         if (is_null($supportedServiceVersion)) {
             $client->getLogger()->warning('Service version supported by SDK not specified. Using versionless service URL as-is, without negotiating version.');
-            return new Uri($url);
+            return Url::factory($url);
         }
 
         // Make GET request to URL
@@ -161,7 +162,7 @@ class Endpoint
                 && $version->id == $supportedServiceVersion) {
                 foreach ($version->links as $link) {
                     if ($link->rel == 'self') {
-                        return new Uri($link->href);
+                        return Url::factory($link->href);
                     }
                 }
             }

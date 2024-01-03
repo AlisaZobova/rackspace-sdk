@@ -38,7 +38,7 @@ class NotificationHistoryTest extends CloudMonitoringTestCase
 
     public function test_Record_Checks()
     {
-        $response = new \Guzzle\Http\Message\Response(200, array('Content-Type' => 'application/json'), '{"check_ids": ["chOne","chTwo"]}');
+        $response = new \GuzzleHttp\Psr7\Response(200, array('Content-Type' => 'application/json'), '{"check_ids": ["chOne","chTwo"]}');
         $this->addMockSubscriber($response);
 
         $checks = $this->alarm->getRecordedChecks();

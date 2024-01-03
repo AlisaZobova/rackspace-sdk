@@ -66,7 +66,7 @@ class Resource extends ReadOnlyResource
     public function getMetadata()
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'metadata');
+        $url = $url->addPath('metadata');
 
         $response = $this->getClient()->get($url)->send();
         $json = Formatter::decode($response);
@@ -83,7 +83,7 @@ class Resource extends ReadOnlyResource
     public function listEvents(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Event::resourceName())->setQuery($params);
+        $url = $url->addPath(Event::resourceName())->addQuery($params);
 
         return $this->getService()->resourceList('Event', $url, $this);
     }

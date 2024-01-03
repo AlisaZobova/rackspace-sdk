@@ -244,7 +244,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
     /**
      * Creates currently added nodes by sending them to the API
      *
-     * @return array of {@see \Guzzle\Http\Message\Response} objects
+     * @return array of {@see \GuzzleHttp\Psr7\Response} objects
      * @throws \OpenCloud\Common\Exceptions\MissingValueError
      */
     public function addNodes()
@@ -275,7 +275,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * Remove a node from this load-balancer
      *
      * @param int $id id of the node
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function removeNode($nodeId)
     {
@@ -430,7 +430,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * @param string $privateKey              The private key for the certificate
      * @param string $certificate             The certificate itself.
      * @param string $intermediateCertificate The intermediate certificate chain.
-     * @return array An array of \Guzzle\Http\Message\Response objects.
+     * @return array An array of \GuzzleHttp\Psr7\Response objects.
      */
     public function addCertificateMapping(
         $hostName,
@@ -460,7 +460,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * @param string $privateKey              (Optional) The private key for the certificate.
      * @param string $certificate             The certificate itself.
      * @param string $intermediateCertificate The intermediate certificate chain.
-     * @return array An array of \Guzzle\Http\Message\Response objects.
+     * @return array An array of \GuzzleHttp\Psr7\Response objects.
      */
     public function updateCertificateMapping(
         $id,
@@ -484,7 +484,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * Remove a certificate mapping.
      *
      * @param int $id ID of the certificate mapping.
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function removeCertificateMapping($id)
     {
@@ -557,12 +557,12 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      *
      * @param stdClass[] $list
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createAccessList(array $list)
     {
         $url = $this->getUrl();
-        $url->addPath('accesslist');
+        $url = $url->addPath('accesslist');
 
         $json = json_encode($list);
         $this->checkJsonError();
@@ -596,7 +596,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
     public function hasConnectionLogging()
     {
         $url = clone $this->getUrl();
-        $url->addPath('connectionlogging');
+        $url = $url->addPath('connectionlogging');
 
         $response = $this->getClient()->get($url)->send()->json();
 
@@ -608,12 +608,12 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * Set the connection logging setting for this load balancer
      *
      * @param $bool  Set to TRUE to enable, FALSE to disable
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function enableConnectionLogging($bool)
     {
         $url = clone $this->getUrl();
-        $url->addPath('connectionlogging');
+        $url = $url->addPath('connectionlogging');
 
         $body = array('connectionLogging' => (bool) $bool);
 
@@ -636,7 +636,7 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
     public function hasContentCaching()
     {
         $url = clone $this->getUrl();
-        $url->addPath('contentcaching');
+        $url = $url->addPath('contentcaching');
 
         $response = $this->getClient()->get($url)->send()->json();
 
@@ -648,12 +648,12 @@ class LoadBalancer extends PersistentResource implements HasPtrRecordsInterface
      * Set the content caching setting for this load balancer
      *
      * @param $bool  Set to TRUE to enable, FALSE to disable
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function enableContentCaching($bool)
     {
         $url = clone $this->getUrl();
-        $url->addPath('contentcaching');
+        $url = $url->addPath('contentcaching');
 
         $body = array('contentCaching' => array('enabled' => (bool) $bool));
         $body = json_encode($body);

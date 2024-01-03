@@ -17,8 +17,9 @@
 
 namespace OpenCloud\DNS\Resource;
 
-use Guzzle\Http\Url;
+
 use OpenCloud\Common\Constants\State;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\Common\PersistentObject;
 use OpenCloud\Common\Service\ServiceInterface;
 
@@ -67,8 +68,7 @@ class AsyncResponse extends PersistentObject
      */
     public function getUrl($path = null, array $query = array())
     {
-        return Url::factory($this->callbackUrl)
-            ->setQuery(array('showDetails' => 'True'));
+        return Url::factory($this->callbackUrl)->addQuery(['showDetails' => 'True']);
     }
 
     /**
@@ -110,8 +110,7 @@ class AsyncResponse extends PersistentObject
         $timeout  = $timeout ?: State::DEFAULT_TIMEOUT;
         $interval = $interval ?: self::DEFAULT_INTERVAL;
 
-        $jobUrl = Url::factory($this->callbackUrl);
-        $jobUrl->setQuery(array('showDetails' => 'true'));
+        $jobUrl = Url::factory($this->callbackUrl)->addQuery(['showDetails' => 'True']);
 
         $continue = true;
         $startTime = time();

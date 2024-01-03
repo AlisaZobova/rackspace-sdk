@@ -17,11 +17,11 @@
 
 namespace OpenCloud\ObjectStore\Resource;
 
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Http\Exception\ClientErrorResponseException;
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7\Response;
+
 use GuzzleHttp\Exception\ClientException;
 use OpenCloud\Common\Constants\Size;
 use OpenCloud\Common\Exceptions;
@@ -245,8 +245,7 @@ class Container extends AbstractContainer
     public function deleteObject($name)
     {
         $this->getClient()
-            ->delete($this->getUrl($name))
-            ->send();
+            ->delete($this->getUrl($name));
     }
 
     /**
@@ -281,7 +280,7 @@ class Container extends AbstractContainer
     /**
      * Turn on access logs, which track all the web traffic that your data objects accrue.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function enableLogging()
     {
@@ -293,7 +292,7 @@ class Container extends AbstractContainer
     /**
      * Disable access logs.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function disableLogging()
     {
@@ -322,7 +321,7 @@ class Container extends AbstractContainer
      * Disables the containers CDN function. Note that the container will still
      * be available on the CDN until its TTL expires.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function disableCdn()
     {
@@ -374,8 +373,7 @@ class Container extends AbstractContainer
     {
         try {
             $response = $this->getClient()
-                ->get($this->getUrl($name), $headers)
-                ->send();
+                ->get($this->getUrl($name), $headers);
         } catch (BadResponseException $e) {
             if ($e->getResponse()->getStatusCode() == 404) {
                 throw ObjectNotFoundException::factory($name, $e);
@@ -420,7 +418,7 @@ class Container extends AbstractContainer
         try {
             // Send HEAD request to check resource existence
             $url = clone $this->getUrl();
-            $url->withPath($url->getPath().(string) $name);
+            $url = $url->addPath((string) $name);
             $this->getClient()->head($url)->send();
         } catch (ClientErrorResponseException $e) {
             // If a 404 was returned, then the object doesn't exist
@@ -444,14 +442,23 @@ class Container extends AbstractContainer
      */
     public function uploadObject($name, $data, array $headers = array())
     {
-        $entityBody = EntityBody::factory($data);
+        $entityBody = Psr7\Utils::streamFor($data);
 
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().$name);
+        $url = $url->addPath($name);
 
         // @todo for new major release: Return response rather than populated DataObject
 
-        $response = $this->getClient()->put($url, $headers, $entityBody)->send();
+        // TODO add header because `400 Bad Request` response X-Object-Manifest must be in the format container/prefix
+
+        if(!in_array('X-Object-Manifest', $headers)) {
+            $headers['X-Object-Manifest'] = implode('/', array_slice(explode('/', $url), -2));
+        }
+
+        $response = $this->getClient()->put($url, [
+            'headers' => $headers,
+            'body' => $entityBody
+        ]);
 
         return $this->dataObject()
             ->populateFromResponse($response)
@@ -470,11 +477,11 @@ class Container extends AbstractContainer
      *                       `body' Either a string or stream representation of the file contents to be uploaded.
      * @param array $headers Optional headers that will be sent with the request (useful for object metadata).
      * @param string $returnType One of OpenCloud\ObjectStore\Enum\ReturnType::RESPONSE_ARRAY (to return an array of
-     *                           Guzzle\Http\Message\Response objects) or OpenCloud\ObjectStore\Enum\ReturnType::DATA_OBJECT_ARRAY
+     *                           GuzzleHttp\Psr7\Response objects) or OpenCloud\ObjectStore\Enum\ReturnType::DATA_OBJECT_ARRAY
      *                           (to return an array of OpenCloud\ObjectStore\Resource\DataObject objects).
      *
      * @throws \OpenCloud\Common\Exceptions\InvalidArgumentError
-     * @return Guzzle\Http\Message\Response[] or OpenCloud\ObjectStore\Resource\DataObject[] depending on $returnType
+     * @return GuzzleHttp\Psr7\Response[] or OpenCloud\ObjectStore\Resource\DataObject[] depending on $returnType
      */
     public function uploadObjects(array $files, array $commonHeaders = array(), $returnType = ReturnType::RESPONSE_ARRAY)
     {
@@ -493,7 +500,7 @@ class Container extends AbstractContainer
                 throw new Exceptions\InvalidArgumentError('You must provide either a readable path or a body');
             }
 
-            $entityBody = $entities[] = EntityBody::factory($body);
+            $entityBody = $entities[] = Psr7\Utils::streamFor($body);
 
             // @codeCoverageIgnoreStart
             if ($entityBody->getContentLength() >= 5 * Size::GB) {
@@ -508,7 +515,7 @@ class Container extends AbstractContainer
             $headers = (isset($entity['headers'])) ? $entity['headers'] : $commonHeaders;
 
             $url = clone $this->getUrl();
-            $url->withPath($url->getPath().$entity['name']);
+            $url = $url->addPath($entity['name']);
 
             $requests[] = $this->getClient()->put($url, $headers, $entityBody);
         }
@@ -561,7 +568,7 @@ class Container extends AbstractContainer
         // Build upload
         $transfer = TransferBuilder::newInstance()
             ->setOption('objectName', $options['name'])
-            ->setEntityBody(EntityBody::factory($body))
+            ->setEntityBody(Psr7\Utils::streamFor($body))
             ->setContainer($this);
 
         // Add extra options

@@ -17,7 +17,7 @@
 
 namespace OpenCloud\ObjectStore\Upload;
 
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use Guzzle\Http\ReadLimitEntityBody;
 
 /**
@@ -82,8 +82,8 @@ class ConcurrentTransfer extends AbstractTransfer
         $array = array(new ReadLimitEntityBody($this->entityBody, $this->partSize));
 
         for ($i = 1; $i < $workers; $i++) {
-            // Need to create a fresh EntityBody, otherwise you'll get weird 408 responses
-            $array[] = new ReadLimitEntityBody(new EntityBody(fopen($uri, 'r')), $this->partSize);
+            // Need to create a fresh Stream, otherwise you'll get weird 408 responses
+            $array[] = new ReadLimitEntityBody(Psr7\Utils::streamFor(fopen($uri, 'r')), $this->partSize);
         }
 
         return $array;

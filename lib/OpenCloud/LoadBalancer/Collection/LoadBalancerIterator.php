@@ -2,6 +2,7 @@
 
 namespace OpenCloud\LoadBalancer\Collection;
 
+use GuzzleHttp\Psr7\Query;
 use OpenCloud\Common\Collection\PaginatedIterator;
 
 class LoadBalancerIterator extends PaginatedIterator
@@ -13,11 +14,9 @@ class LoadBalancerIterator extends PaginatedIterator
         $url = parent::constructNextUrl();
 
         // We need to return n+1 items in order to grab the relevant marker value
-        $query = $url->getQuery();
+        $query = Query::parse($url->getQuery());
         $query['limit'] = $query['limit'] + 1;
-        $url->setQuery($query);
-
-        return $url;
+        return $url->addQuery($query);
     }
 
     public function updateMarkerToCurrent()

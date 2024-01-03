@@ -81,7 +81,7 @@ class CDNContainer extends AbstractContainer
     /**
      * Turn on access logs, which track all the web traffic that your data objects accrue.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function enableCdnLogging()
     {
@@ -93,7 +93,7 @@ class CDNContainer extends AbstractContainer
     /**
      * Disable access logs.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function disableCdnLogging()
     {
@@ -111,7 +111,7 @@ class CDNContainer extends AbstractContainer
      * Set the TTL.
      *
      * @param $ttl The time-to-live in seconds.
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function setTtl($ttl)
     {

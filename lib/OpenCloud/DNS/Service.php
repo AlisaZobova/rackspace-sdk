@@ -83,7 +83,7 @@ class Service extends CatalogService
     public function domainList($filter = array())
     {
         $url = $this->getUrl(Domain::resourceName());
-        $url->setQuery($filter);
+        $url = $url->addQuery($filter);
 
         return $this->resourceList('Domain', $url);
     }
@@ -104,14 +104,14 @@ class Service extends CatalogService
      *
      * @param \OpenCloud\Compute\Resource\Server $server the server for which to
      *                                                   retrieve the PTR records
-     * @return OpenCloud\DNS\Collection\DnsIterator
+     * @return \OpenCloud\Common\Collection\PaginatedIterator
      */
     public function ptrRecordList(HasPtrRecordsInterface $parent)
     {
         $url = $this->getUrl()
-            ->withPath($url->getPath().'rdns')
-            ->withPath($url->getPath().$parent->getService()->getName())
-            ->setQuery(array('href' => (string) $parent->getUrl()));
+            ->addPath('rdns')
+            ->addPath($parent->getService()->getName())
+            ->addQuery(array('href' => (string) $parent->getUrl()));
 
         return $this->resourceList('PtrRecord', $url);
     }
@@ -151,8 +151,7 @@ class Service extends CatalogService
     public function import($data)
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'domains');
-        $url->withPath($url->getPath().'import');
+        $url = $url->addPath('domains')->addPath('import');
 
         $object = (object) array(
             'domains' => array(
@@ -178,7 +177,7 @@ class Service extends CatalogService
         $url = $this->getUrl('limits');
 
         if ($type) {
-            $url->withPath($url->getPath().$type);
+            $url = $url->addPath($type);
         }
 
         $response = $this->getClient()->get($url)->send();
@@ -205,13 +204,13 @@ class Service extends CatalogService
      * @see http://docs.rackspace.com/cdns/api/v1.0/cdns-devguide/content/viewing_status_all_asynch_jobs.html
      *
      * @param array $query Any query parameters. Optional.
-     * @return OpenCloud\DNS\Collection\DnsIterator
+     * @return DnsIterator
      */
     public function listAsyncJobs(array $query = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'status');
-        $url->setQuery($query);
+        $url = $url->addPath('status');
+        $url = $url->addQuery($query);
 
         return DnsIterator::factory($this, array(
             'baseUrl'        => $url,
@@ -223,9 +222,9 @@ class Service extends CatalogService
     public function getAsyncJob($jobId, $showDetails = true)
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'status');
-        $url->withPath($url->getPath().(string) $jobId);
-        $url->setQuery(array('showDetails' => ($showDetails) ? 'true' : 'false'));
+        $url = $url->addPath('status');
+        $url = $url->addPath((string) $jobId);
+        $url = $url->addQuery(array('showDetails' => ($showDetails) ? 'true' : 'false'));
 
         $response = $this->getClient()->get($url)->send();
 

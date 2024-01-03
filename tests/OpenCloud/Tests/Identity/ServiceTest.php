@@ -62,7 +62,7 @@ class ServiceTest extends IdentityTestCase
     public function test_Revoke_Token()
     {
         $response = $this->service->revokeToken(12345);
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 
     public function test_Get_Tenants()

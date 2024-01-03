@@ -47,7 +47,7 @@ class Member extends AbstractSchemaResource
      * Update the status of a member, allowing them to fully access an image after being invited
      *
      * @param $status The eventual status this member wants.
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws \OpenCloud\Common\Exceptions\ForbiddenOperationException
      * @throws \OpenCloud\Common\Exceptions\ResourceNotFoundException
      * @throws \Guzzle\Http\Exception\BadResponseException
@@ -84,7 +84,7 @@ class Member extends AbstractSchemaResource
     }
 
     /**
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function delete()
     {

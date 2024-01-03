@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\Image\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Image\Resource\Image;
 use OpenCloud\Image\Resource\Schema\Schema;
 use OpenCloud\Tests\OpenCloudTestCase;
@@ -52,7 +52,7 @@ class ImageTest extends OpenCloudTestCase
 
         $response = $this->image->update($config, $schema);
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 
     public function test_Updating_AddProperty()
@@ -64,7 +64,7 @@ class ImageTest extends OpenCloudTestCase
 
         $response = $this->image->update($config, $schema);
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 
     /**
@@ -82,21 +82,21 @@ class ImageTest extends OpenCloudTestCase
 
         $response = $this->image->update($config, $schema);
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $response);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $response);
     }
 
     public function test_Refresh()
     {
         $this->addMockSubscriber($this->makeResponse('{"id":"da3b75d9-3f4a-40e7-8a2c-bfab23927dea","name":"cirros-0.3.0-x86_64-uec-ramdisk","status":"active","visibility":"public","size":2254249,"checksum":"2cec138d7dae2aa59038ef8c9aec2390","tags":["ping","pong"],"created_at":"2012-08-10T19:23:50Z","updated_at":"2012-08-10T19:23:50Z","self":"/v2/images/da3b75d9-3f4a-40e7-8a2c-bfab23927dea","file":"/v2/images/da3b75d9-3f4a-40e7-8a2c-bfab23927dea/file","schema":"/v2/schemas/image"}'));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->refresh());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->refresh());
     }
 
     public function test_Delete()
     {
         $this->addMockSubscriber(new Response(204));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->delete());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->delete());
     }
 
     public function test_List_Members()
@@ -124,28 +124,28 @@ EOT;
     {
         $this->addMockSubscriber(new Response(201));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->createMember(12345));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->createMember(12345));
     }
 
     public function test_Delete_Member()
     {
         $this->addMockSubscriber(new Response(201));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->deleteMember(12345));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->deleteMember(12345));
     }
 
     public function test_Create_Tag()
     {
         $this->addMockSubscriber(new Response(201));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->addTag(12345));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->addTag(12345));
     }
 
     public function test_Delete_Tag()
     {
         $this->addMockSubscriber(new Response(204));
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->image->deleteTag(12345));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->image->deleteTag(12345));
     }
 
     public function testGetPatchHeaders()

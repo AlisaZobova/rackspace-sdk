@@ -43,7 +43,7 @@ class Header
     const CONTENT_RANGE = 'Content-Range';
     const CONTENT_TYPE = 'Content-Type';
     const DATE = 'Date';
-    const ETAG = 'ETag';
+    const ETAG = 'Etag';
     const EXPECT = 'Expect';
     const EXPIRES = 'Expires';
     const FROM = 'From';

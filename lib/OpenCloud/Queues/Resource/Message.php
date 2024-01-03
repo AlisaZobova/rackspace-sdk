@@ -17,7 +17,9 @@
 
 namespace OpenCloud\Queues\Resource;
 
-use Guzzle\Http\Url;
+
+use GuzzleHttp\Psr7\Query;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\Common\PersistentObject;
 use OpenCloud\Queues\Exception\DeleteMessageException;
 
@@ -152,6 +154,6 @@ class Message extends PersistentObject
     {
         $url = Url::factory($this->href);
 
-        return $url->getQuery()->get('claim_id');
+        return Query::parse($url->getQuery())['claim_id'];
     }
 }

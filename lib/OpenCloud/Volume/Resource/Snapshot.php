@@ -49,7 +49,7 @@ class Snapshot extends PersistentResource
      * Rename either the `display_description` or the `display_name` properties
      *
      * @param array $params
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws \InvalidArgumentException
      */
     public function rename(array $params = array())

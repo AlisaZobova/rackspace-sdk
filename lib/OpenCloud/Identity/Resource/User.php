@@ -225,7 +225,7 @@ class User extends PersistentObject
      * This operation will set the user's password to a new value.
      *
      * @param $newPassword The new password to use for this user
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function updatePassword($newPassword)
     {
@@ -247,7 +247,7 @@ class User extends PersistentObject
     public function getOtherCredentials()
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().'credentials');
+        $url = $url->addPath('OS-KSADM')->addPath('credentials');
 
         $response = $this->getClient()->get($url)->send();
 
@@ -264,7 +264,7 @@ class User extends PersistentObject
     public function getApiKey()
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().'credentials')->withPath($url->getPath().'RAX-KSKEY:apiKeyCredentials');
+        $url = $url->addPath('OS-KSADM')->addPath('credentials')->addPath('RAX-KSKEY:apiKeyCredentials');
 
         $response = $this->getClient()->get($url)->send();
 
@@ -283,11 +283,11 @@ class User extends PersistentObject
     public function resetApiKey()
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'OS-KSADM')
-            ->withPath($url->getPath().'credentials')
-            ->withPath($url->getPath().'RAX-KSKEY:apiKeyCredentials')
-            ->withPath($url->getPath().'RAX-AUTH')
-            ->withPath($url->getPath().'reset');
+        $url = $url->addPath('OS-KSADM')
+            ->addPath('credentials')
+            ->addPath('RAX-KSKEY:apiKeyCredentials')
+            ->addPath('RAX-AUTH')
+            ->addPath('reset');
 
         $response = $this->getClient()->post($url)->send();
 
@@ -302,12 +302,12 @@ class User extends PersistentObject
      * Add a role, specified by its ID, to a user.
      *
      * @param $roleId
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function addRole($roleId)
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'roles')->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().$roleId);
+        $url = $url->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
 
         return $this->getClient()->put($url)->send();
     }
@@ -316,12 +316,12 @@ class User extends PersistentObject
      * Remove a role, specified by its ID, from a user.
      *
      * @param $roleId
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function removeRole($roleId)
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'roles')->withPath($url->getPath().'OS-KSADM')->withPath($url->getPath().$roleId);
+        $url = $url->addPath('roles')->addPath('OS-KSADM')->addPath($roleId);
 
         return $this->getClient()->delete($url)->send();
     }
@@ -334,7 +334,7 @@ class User extends PersistentObject
     public function getRoles()
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'roles');
+        $url = $url->addPath('roles');
 
         return PaginatedIterator::factory($this, array(
             'baseUrl'        => $url,

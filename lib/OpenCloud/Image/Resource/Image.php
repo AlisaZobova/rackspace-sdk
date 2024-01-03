@@ -42,7 +42,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
      *
      * @param array  $params
      * @param Schema $schema
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws \RuntimeException
      */
     public function update(array $params, Schema $schema = null)
@@ -94,7 +94,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     /**
      * Refresh this resource
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function refresh()
     {
@@ -108,7 +108,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     /**
      * Delete this resource
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function delete()
     {
@@ -124,7 +124,7 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function listMembers(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Member::resourceName())->setQuery($params);
+        $url = $url->addPath(Member::resourceName())->addQuery($params);
 
         return $this->getService()->resourceList('Member', $url, $this);
     }
@@ -158,8 +158,8 @@ class Image extends AbstractSchemaResource implements ImageInterface
     public function getMember($memberId)
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'members');
-        $url->withPath($url->getPath().(string) $memberId);
+        $url = $url->addPath('members');
+        $url = $url->addPath((string) $memberId);
 
         $data = $this->getClient()->get($url)->send()->json();
 
@@ -170,12 +170,12 @@ class Image extends AbstractSchemaResource implements ImageInterface
      * Add a member to this image
      *
      * @param $tenantId
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function createMember($tenantId)
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'members');
+        $url = $url->addPath('members');
 
         $json = json_encode(array('member' => $tenantId));
         return $this->getClient()->post($url, self::getJsonHeader(), $json)->send();
@@ -185,13 +185,13 @@ class Image extends AbstractSchemaResource implements ImageInterface
      * Delete a member from this image
      *
      * @param $tenantId
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function deleteMember($tenantId)
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'members');
-        $url->withPath($url->getPath().(string)$tenantId);
+        $url = $url->addPath('members');
+        $url = $url->addPath((string)$tenantId);
 
         return $this->getClient()->delete($url)->send();
     }
@@ -200,12 +200,12 @@ class Image extends AbstractSchemaResource implements ImageInterface
      * Add a tag to this image
      *
      * @param string $tag
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function addTag($tag)
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'tags')->withPath($url->getPath().(string) $tag);
+        $url = $url->addPath('tags')->addPath((string) $tag);
 
         return $this->getClient()->put($url)->send();
     }
@@ -214,12 +214,12 @@ class Image extends AbstractSchemaResource implements ImageInterface
      * Delete a tag from this image
      *
      * @param $tag
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function deleteTag($tag)
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'tags')->withPath($url->getPath().(string) $tag);
+        $url = $url->addPath('tags')->addPath((string) $tag);
 
         return $this->getClient()->delete($url)->send();
     }

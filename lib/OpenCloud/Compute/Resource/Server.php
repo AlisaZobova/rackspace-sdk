@@ -335,7 +335,7 @@ class Server extends NovaResource implements HasPtrRecordsInterface
      *
      * @api
      * @param  string $type A particular reboot State. See Constants\ServerState for string values.
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function reboot($type = null)
     {
@@ -783,7 +783,7 @@ class Server extends NovaResource implements HasPtrRecordsInterface
      * device in hibernation; memory and vCPUs become available to create other instances.
      *
      * @api
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function suspend()
     {
@@ -803,7 +803,7 @@ class Server extends NovaResource implements HasPtrRecordsInterface
      * device from hibernation.
      *
      * @api
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function resume()
     {
@@ -842,7 +842,7 @@ class Server extends NovaResource implements HasPtrRecordsInterface
      * Starts a stopped server and changes its status to ACTIVE.
      *
      * @api
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function start()
     {
@@ -860,7 +860,7 @@ class Server extends NovaResource implements HasPtrRecordsInterface
      * Stops a running server and changes its status to STOPPED.
      *
      * @api
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function stop()
     {

@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\Networking;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Tests\OpenCloudTestCase;
 
 class NetworkingTestCase extends OpenCloudTestCase

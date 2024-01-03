@@ -17,9 +17,9 @@
 
 namespace OpenCloud\ObjectStore\Resource;
 
-use Guzzle\Http\EntityBody;
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Response;
+
 use OpenCloud\Common\Constants\Header as HeaderConst;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Lang;
@@ -48,7 +48,7 @@ class DataObject extends AbstractResource
     protected $name;
 
     /**
-     * @var EntityBody
+     * @var Stream
      */
     protected $content;
 
@@ -142,19 +142,18 @@ class DataObject extends AbstractResource
         $headers = $response->getHeaders();
 
         return $this->setMetadata($headers, true)
-            ->setContentType((string) $headers[HeaderConst::CONTENT_TYPE])
-            ->setLastModified((string) $headers[HeaderConst::LAST_MODIFIED])
-            ->setContentLength((string) $headers[HeaderConst::CONTENT_LENGTH])
-            ->setEtag((string) $headers[HeaderConst::ETAG])
+            ->setContentType(implode(',', $headers[HeaderConst::CONTENT_TYPE]))
+            ->setLastModified(implode(',', $headers[HeaderConst::LAST_MODIFIED]))
+            ->setContentLength(implode(',', $headers[HeaderConst::CONTENT_LENGTH]))
+            ->setEtag(implode(',' ,$headers[HeaderConst::ETAG]))
             // do not cast to a string to allow for null (i.e. no header)
-            ->setManifest($headers[HeaderConst::X_OBJECT_MANIFEST]);
+            ->setManifest(in_array(HeaderConst::X_OBJECT_MANIFEST, $headers) ? $headers[HeaderConst::X_OBJECT_MANIFEST] : null);
     }
 
     public function refresh()
     {
         $response = $this->getService()->getClient()
-            ->get($this->getUrl())
-            ->send();
+            ->get($this->getUrl());
 
         return $this->populateFromResponse($response);
     }
@@ -232,13 +231,13 @@ class DataObject extends AbstractResource
     {
         $this->etag = null;
         $this->contentType = null;
-        $this->content = EntityBody::factory($content);
+        $this->content = Psr7\Utils::streamFor($content);
 
         return $this;
     }
 
     /**
-     * @return EntityBody
+     * @return Stream
      */
     public function getContent()
     {
@@ -367,7 +366,7 @@ class DataObject extends AbstractResource
 
     /**
      * @param string $destination Path (`container/object') of new object
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function copy($destination)
     {
@@ -388,7 +387,7 @@ class DataObject extends AbstractResource
      * Create a symlink to another named object from this object. Requires this object to be empty.
      *
      * @param string $destination Path (`container/object') of other object to symlink this object to
-     * @return \Guzzle\Http\Message\Response The response
+     * @return \GuzzleHttp\Psr7\Response The response
      * @throws \OpenCloud\Common\Exceptions\NoNameError if a destination name is not provided
      * @throws \OpenCloud\ObjectStore\Exception\ObjectNotEmptyException if $this is not an empty object
      */
@@ -506,7 +505,7 @@ class DataObject extends AbstractResource
         }
 
         $url = clone $cdn->getUrl();
-        $url->withPath($url->getPath().$this->name);
+        $url = $url->addPath($this->name);
 
         $headers = ($email !== null) ? array('X-Purge-Email' => $email) : array();
 
@@ -539,7 +538,7 @@ class DataObject extends AbstractResource
                 break;
         }
 
-        return (isset($uri)) ? Url::factory($uri)->withPath($url->getPath().$this->name) : false;
+        return (isset($uri)) ? Url::factory($uri)->addPath($this->name) : false;
     }
 
     protected static function headerIsValidMetadata($header)

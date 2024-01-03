@@ -2,7 +2,7 @@
 
 namespace OpenCloud\Tests\ObjectStore\Upload;
 
-use Guzzle\Http\Url;
+
 use OpenCloud\ObjectStore\Upload\DirectorySync;
 use OpenCloud\Tests\OpenCloudTestCase;
 use Prophecy\Argument;
@@ -33,7 +33,7 @@ class DirectorySyncTest extends OpenCloudTestCase
 
         $guzzleMock = $this->prophet->prophesize('Guzzle\Http\Client');
 
-        $guzzleMock->put($baseUrl . '/test1', [], Argument::type('Guzzle\Http\EntityBody'))->shouldBeCalled();
+        $guzzleMock->put($baseUrl . '/test1', [], Argument::type('GuzzleHttp\Psr7\Stream'))->shouldBeCalled();
         $guzzleMock->send(Argument::that(function ($array) { return count($array) === 1; }))->shouldBeCalled();
 
         $containerMock->getClient()->willReturn($guzzleMock->reveal());
@@ -62,7 +62,7 @@ class DirectorySyncTest extends OpenCloudTestCase
 
         $guzzleMock = $this->prophet->prophesize('Guzzle\Http\Client');
 
-        $guzzleMock->put($baseUrl . '/sub-dir/test1', [], Argument::type('Guzzle\Http\EntityBody'))->shouldBeCalled();
+        $guzzleMock->put($baseUrl . '/sub-dir/test1', [], Argument::type('GuzzleHttp\Psr7\Stream'))->shouldBeCalled();
         $guzzleMock->send(Argument::that(function ($array) { return count($array) === 1; }))->shouldBeCalled();
 
         $containerMock->getClient()->willReturn($guzzleMock->reveal());

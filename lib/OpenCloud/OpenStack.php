@@ -17,11 +17,10 @@
 
 namespace OpenCloud;
 
-use GuzzleHttp\Psr7\Uri;
 use OpenCloud\Common\Exceptions;
 use OpenCloud\Common\Http\Client;
 use OpenCloud\Common\Http\Message\Formatter;
-use OpenCloud\Common\Http\Message\RequestSubscriber;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\Common\Lang;
 use OpenCloud\Common\Log\Logger;
 use OpenCloud\Common\Service\Catalog;
@@ -351,7 +350,7 @@ class OpenStack extends Client
      */
     public function setAuthUrl($url)
     {
-        $this->authUrl = new Uri($url);
+        $this->authUrl = Url::factory($url);
 
         return $this;
     }

@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\Autoscale\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Tests\Autoscale\AutoscaleTestCase;
 
 class ScalingPolicyTest extends AutoscaleTestCase

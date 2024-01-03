@@ -113,7 +113,7 @@ class AlarmTest extends CloudMonitoringTestCase
 
     public function testCreate()
     {
-        $this->addMockSubscriber(new \Guzzle\Http\Message\Response(201));
+        $this->addMockSubscriber(new \GuzzleHttp\Psr7\Response(201));
         $this->resource->create(array(
             'check_id'             => 'foo',
             'notification_plan_id' => 'bar'

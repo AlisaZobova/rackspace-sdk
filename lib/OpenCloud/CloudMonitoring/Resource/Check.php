@@ -155,7 +155,7 @@ class Check extends AbstractResource
         $metric = $this->getService()->resource('Metric', null, $this);
 
         $url = clone $metric->getUrl();
-        $url->addPath($metricName)->addPath('plot');
+        $url = $url->addPath($metricName)->addPath('plot');
 
         $parts = array();
 
@@ -208,7 +208,7 @@ class Check extends AbstractResource
             ));
         }
 
-        $url->setQuery($parts);
+        $url = $url->addQuery($parts);
 
         return $this->getService()->resourceList('MetricDataPoint', $url, $this);
     }

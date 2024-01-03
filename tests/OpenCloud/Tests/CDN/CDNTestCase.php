@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\CDN;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Tests\OpenCloudTestCase;
 
 class CDNTestCase extends OpenCloudTestCase

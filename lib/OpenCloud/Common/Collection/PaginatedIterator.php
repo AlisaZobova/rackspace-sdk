@@ -18,9 +18,12 @@
 namespace OpenCloud\Common\Collection;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
-use Guzzle\Http\Url;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Psr7\Query;
+use GuzzleHttp\Psr7\Request;
 use Iterator;
 use OpenCloud\Common\Http\Message\Formatter;
+use OpenCloud\Common\Http\Url;
 
 /**
  * Class ResourceIterator is tasked with iterating over resource collections - many of which are paginated. Based on
@@ -212,19 +215,19 @@ class PaginatedIterator extends ResourceIterator implements Iterator
      */
     public function appendNewCollection()
     {
-        $request = $this->resourceParent
-            ->getClient()
-            ->createRequest(
-                $this->getOption('request.method'),
-                $this->constructNextUrl(),
-                $this->getOption('request.headers'),
-                $this->getOption('request.body'),
-                $this->getOption('request.curlOptions')
-            );
+        $client = $this->resourceParent->getClient();
+
+        $url = $this->constructNextUrl();
+        $method = $this->getOption('request.method');
+        $headers = $this->getOption('request.headers');
+        $body = $this->getOption('request.body');
+        $curlOptions = $this->getOption('request.curlOptions');
+
+        $request = new Request($method, $url, $headers, $body);
 
         try {
-            $response = $request->send();
-        } catch (ClientErrorResponseException $e) {
+            $response = $client->send($request, $curlOptions);
+        } catch (ClientException $e) {
             return false;
         }
 
@@ -270,17 +273,17 @@ class PaginatedIterator extends ResourceIterator implements Iterator
     {
         if (!$url = $this->nextUrl) {
             $url = clone $this->getOption('baseUrl');
-            $query = $url->getQuery();
+            $query = Query::parse($url->getQuery());
 
             if (isset($this->currentMarker)) {
                 $query[static::MARKER] = $this->currentMarker;
             }
 
-            if (($limit = $this->getOption('limit.page')) && !$query->hasKey(static::LIMIT)) {
+            if (($limit = $this->getOption('limit.page')) && !in_array(static::LIMIT, $query)) {
                 $query[static::LIMIT] = $limit;
             }
 
-            $url->setQuery($query);
+            $url = $url->addQuery($query);
         }
 
         return $url;

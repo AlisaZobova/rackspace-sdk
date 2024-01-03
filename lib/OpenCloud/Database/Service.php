@@ -52,7 +52,7 @@ class Service extends NovaService
     public function instanceList($params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Instance::resourceName())->setQuery($params);
+        $url = $url->addPath(Instance::resourceName())->addQuery($params);
 
         return $this->resourceList('Instance', $url);
     }
@@ -77,7 +77,7 @@ class Service extends NovaService
     public function configurationList($params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Configuration::resourceName())->setQuery($params);
+        $url = $url->addPath(Configuration::resourceName())->addQuery($params);
 
         return $this->resourceList('Configuration', $url);
     }
@@ -102,7 +102,7 @@ class Service extends NovaService
     public function datastoreList($params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Datastore::resourceName())->setQuery($params);
+        $url = $url->addPath(Datastore::resourceName())->addQuery($params);
 
         return $this->resourceList('Datastore', $url);
     }
@@ -127,7 +127,7 @@ class Service extends NovaService
     public function backupList($params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Backup::resourceName())->setQuery($params);
+        $url = $url->addPath(Backup::resourceName())->addQuery($params);
 
         return $this->resourceList('Backup', $url);
     }

@@ -17,12 +17,13 @@
 
 namespace OpenCloud\Common\Resource;
 
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7\Response;
+
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Exceptions\DocumentError;
 use OpenCloud\Common\Exceptions\ServiceException;
 use OpenCloud\Common\Exceptions\UrlError;
+use OpenCloud\Common\Http\Url;
 use OpenCloud\Common\Metadata;
 use OpenCloud\Common\Service\ServiceInterface;
 use OpenCloud\Common\Http\Message\Formatter;
@@ -154,7 +155,7 @@ abstract class BaseResource extends Base
 
             // Does it have a primary key?
             if (null !== ($primaryKey = $this->getProperty($this->primaryKeyField()))) {
-                $url->withPath($url->getPath().(string) $primaryKey);
+                $url = $url->addPath((string) $primaryKey);
             }
         }
 
@@ -162,7 +163,7 @@ abstract class BaseResource extends Base
             $url = Url::factory($url);
         }
 
-        return $url->withPath($url->getPath().(string) $path)->setQuery($query);
+        return $url->addPath($path)->addQuery($query);
     }
 
     /**

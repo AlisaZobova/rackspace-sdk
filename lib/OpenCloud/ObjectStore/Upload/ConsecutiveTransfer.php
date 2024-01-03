@@ -17,12 +17,12 @@
 
 namespace OpenCloud\ObjectStore\Upload;
 
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use Guzzle\Http\ReadLimitEntityBody;
 use OpenCloud\Common\Constants\Size;
 
 /**
- * A transfer type which executes consecutively - i.e. it will upload an entire EntityBody and then move on to the next
+ * A transfer type which executes consecutively - i.e. it will upload an entire Stream and then move on to the next
  * in a linear fashion. There is no concurrency here.
  *
  * @codeCoverageIgnore
@@ -37,7 +37,7 @@ class ConsecutiveTransfer extends AbstractTransfer
                 $body = new ReadLimitEntityBody($this->entityBody, $this->partSize, $this->entityBody->ftell());
             } else {
                 // If not-seekable, read the data into a new, seekable "buffer"
-                $body = EntityBody::factory();
+                $body = Psr7\Utils::streamFor();
                 $output = true;
                 while ($body->getContentLength() < $this->partSize && $output !== false) {
                     // Write maximum of 10KB at a time

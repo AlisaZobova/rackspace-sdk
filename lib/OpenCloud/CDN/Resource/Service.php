@@ -69,9 +69,9 @@ class Service extends PersistentResource
     {
         $assetsUrl = $this->assetsUrl();
         if (null === $assetUrl) {
-            $assetsUrl->setQuery(array('all' => 'true'));
+            $assetsUrl = $assetsUrl->addQuery(array('all' => 'true'));
         } else {
-            $assetsUrl->setQuery(array('url' => $assetUrl));
+            $assetsUrl = $assetsUrl->addQuery(array('url' => $assetUrl));
         }
 
         $request = $this->getClient()->delete($assetsUrl);
@@ -87,9 +87,7 @@ class Service extends PersistentResource
     protected function assetsUrl()
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'assets');
-
-        return $url;
+        return $url->addPath('assets');
     }
 
     protected function createJson()
@@ -102,7 +100,7 @@ class Service extends PersistentResource
      * Update this resource
      *
      * @param array $params
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function update($params = array())
     {

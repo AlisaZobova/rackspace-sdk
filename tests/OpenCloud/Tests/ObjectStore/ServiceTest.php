@@ -25,7 +25,7 @@
  */
 namespace OpenCloud\Tests\ObjectStore;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\ObjectStore\Constants\UrlType;
 use OpenCloud\ObjectStore\Service;
 

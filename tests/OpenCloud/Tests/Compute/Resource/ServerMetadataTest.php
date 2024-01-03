@@ -27,7 +27,7 @@ class ServerMetadataTest extends ComputeTestCase
     {
         parent::setupObjects();
 
-        $response = new \Guzzle\Http\Message\Response(200, array('content-type' => 'application/json'), '{"metadata": {"foo": "bar"}}');
+        $response = new \GuzzleHttp\Psr7\Response(200, array('content-type' => 'application/json'), '{"metadata": {"foo": "bar"}}');
         $this->addMockSubscriber($response);
         $this->metadata = $this->server->metadata('foo');
     }

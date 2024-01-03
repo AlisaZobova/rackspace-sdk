@@ -3,7 +3,7 @@
 namespace OpenCloud\Common\Exceptions;
 
 use Guzzle\Http\Message\RequestInterface;
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 
 class HttpResponseException extends \Exception
 {

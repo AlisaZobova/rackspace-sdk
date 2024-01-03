@@ -107,17 +107,7 @@ abstract class AbstractContainer extends AbstractResource
 
         $url = $this->getService()->getUrl();
 
-        $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
-
-        $currentPath = $url->getPath();
-
-        if (substr($currentPath, -1) !== '/') {
-            // If not, append a forward slash to the end of the path
-            $currentPath .= '/';
-        }
-
-
-        return $url->withPath($currentPath.(string) $this->getName().'/'.$path)->withQuery($existingQuery.\GuzzleHttp\Psr7\Query::build($params));
+        return $url->addPath((string) $this->getName().'/'.$path)->addQuery($params);
     }
 
     protected function createRefreshRequest()
@@ -129,7 +119,7 @@ abstract class AbstractContainer extends AbstractResource
      * This method will enable your CDN-enabled container to serve out HTML content like a website.
      *
      * @param $indexPage The data object name (i.e. a .html file) that will serve as the main index page.
-     * @return \Guzzle\Http\Message\Response The HTTP response for this API operation.
+     * @return \GuzzleHttp\Psr7\Response The HTTP response for this API operation.
      */
     public function setStaticIndexPage($page)
     {
@@ -148,7 +138,7 @@ abstract class AbstractContainer extends AbstractResource
      * Set the default error page for your static site.
      *
      * @param $name The data object name (i.e. a .html file) that will serve as the main error page.
-     * @return \Guzzle\Http\Message\Response The HTTP response for this operation.
+     * @return \GuzzleHttp\Psr7\Response The HTTP response for this operation.
      */
     public function setStaticErrorPage($page)
     {

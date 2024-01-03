@@ -98,7 +98,7 @@ class Stack extends PersistentResource
      * Creates a new stack by adopting resources from an abandoned stack
      *
      * @param array $params Adopt stack parameters
-     * @return Guzzle\Http\Message\Response
+     * @return GuzzleHttp\Psr7\Response
      */
     public function adopt($params)
     {
@@ -115,7 +115,7 @@ class Stack extends PersistentResource
      * Previews the stack without actually creating it
      *
      * @param array $params Preview stack parameters
-     * @return Guzzle\Http\Message\Response
+     * @return GuzzleHttp\Psr7\Response
      */
     public function preview($params = array())
     {
@@ -169,7 +169,7 @@ class Stack extends PersistentResource
     public function listResources(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Resource::resourceName())->setQuery($params);
+        $url = $url->addPath(Resource::resourceName())->addQuery($params);
 
         return $this->getService()->resourceList('Resource', $url, $this);
     }
@@ -183,7 +183,7 @@ class Stack extends PersistentResource
     public function listEvents(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Event::resourceName())->setQuery($params);
+        $url = $url->addPath(Event::resourceName())->addQuery($params);
 
         return $this->getService()->resourceList('Event', $url, $this);
     }
@@ -204,7 +204,7 @@ class Stack extends PersistentResource
     public function getStackTemplate()
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'template');
+        $url = $url->addPath('template');
 
         $response = $this->getClient()->get($url)->send();
         return $response->getBody(true);
@@ -213,18 +213,14 @@ class Stack extends PersistentResource
     protected function previewUrl()
     {
         $url = clone $this->getParent()->getUrl();
-        $url->withPath($url->getPath().self::resourceName());
-        $url->addPath('preview');
-
-        return $url;
+        $url = $url->addPath(self::resourceName());
+        return $url->addPath('preview');
     }
 
     protected function abandonUrl()
     {
         $url = clone $this->getUrl();
-        $url->addPath('abandon');
-
-        return $url;
+        return $url->addPath('abandon');
     }
 
     protected function primaryKeyField()

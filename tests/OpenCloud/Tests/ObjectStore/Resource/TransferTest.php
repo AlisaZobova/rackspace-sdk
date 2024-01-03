@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\ObjectStore\Resource;
 
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use OpenCloud\ObjectStore\Upload\TransferBuilder;
 use OpenCloud\Tests\ObjectStore\ObjectStoreTestCase;
 
@@ -29,7 +29,7 @@ class TransferTest extends ObjectStoreTestCase
 
         $transfer = TransferBuilder::newInstance()
             ->setOptions($options)
-            ->setEntityBody(EntityBody::factory(str_repeat('A', 100)))
+            ->setEntityBody(Psr7\Utils::streamFor(str_repeat('A', 100)))
             ->setContainer($this->container)
             ->build();
 
@@ -43,7 +43,7 @@ class TransferTest extends ObjectStoreTestCase
     {
         TransferBuilder::newInstance()
             ->setOptions(array('objectName' => false))
-            ->setEntityBody(EntityBody::factory(str_repeat('A', 100)))
+            ->setEntityBody(Psr7\Utils::streamFor(str_repeat('A', 100)))
             ->setContainer($this->container)
             ->build();
     }

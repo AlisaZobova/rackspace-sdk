@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\ObjectStore\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Common\Constants\Header;
 use OpenCloud\ObjectStore\Constants\UrlType;
 use OpenCloud\ObjectStore\Exception\ObjectNotEmptyException;
@@ -50,7 +50,7 @@ class DataObjectTest extends ObjectStoreTestCase
         $this->assertNotNull($object->getEtag());
 
         $this->assertInstanceOf('OpenCloud\ObjectStore\Resource\DataObject', $object->update());
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $object->delete());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $object->delete());
     }
 
     /**
@@ -66,7 +66,7 @@ class DataObjectTest extends ObjectStoreTestCase
     {
         $object = $this->container->dataObject('foobar');
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $object->copy('/new_container/new_object')
         );
     }
@@ -121,7 +121,7 @@ class DataObjectTest extends ObjectStoreTestCase
         $object = $this->container->dataObject('foobar');
         $this->setupCdnContainerMockResponse();
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $object->purge('test@example.com')
         );
     }
@@ -142,7 +142,7 @@ class DataObjectTest extends ObjectStoreTestCase
         $targetName = 'new_container/new_object';
         $this->addMockSubscriber(new Response(200, array(Header::X_OBJECT_MANIFEST => $targetName)));
         $object = $this->container->dataObject('foobar');
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $object->createSymlinkTo($targetName));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $object->createSymlinkTo($targetName));
         $this->assertEquals($targetName, $object->getManifest());
     }
 

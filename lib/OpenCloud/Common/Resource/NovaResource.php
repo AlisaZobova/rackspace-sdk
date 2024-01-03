@@ -23,7 +23,7 @@ abstract class NovaResource extends PersistentResource
      * This method is used for many purposes, such as rebooting server, etc.
      *
      * @param $object
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
@@ -43,7 +43,7 @@ abstract class NovaResource extends PersistentResource
 
         // get the URL for the POST message
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'action');
+        $url = $url->addPath('action');
 
         // POST the message
         return $this->getClient()->post($url, self::getJsonHeader(), $json)->send();

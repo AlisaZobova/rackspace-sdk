@@ -37,7 +37,7 @@ $container = $objectStoreService->getContainer('{containerName}');
 /** @var $object OpenCloud\ObjectStore\Resource\DataObject **/
 $object = $container->getObject('{objectName}');
 
-/** @var $objectContent Guzzle\Http\EntityBody **/
+/** @var $objectContent GuzzleHttp\Psr7\Stream **/
 $objectContent = $object->getContent();
 
 // 5. Write object content to file on local filesystem.

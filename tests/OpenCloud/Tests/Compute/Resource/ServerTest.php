@@ -151,7 +151,7 @@ class ServerTest extends ComputeTestCase
      */
     public function test_Create_Image()
     {
-        $this->addMockSubscriber(new \Guzzle\Http\Message\Response(404));
+        $this->addMockSubscriber(new \GuzzleHttp\Psr7\Response(404));
         $resp = $this->server->createImage('EPIC-IMAGE', array('foo' => 'bar'));
         $this->assertFalse($resp);
     }
@@ -447,13 +447,13 @@ class ServerTest extends ComputeTestCase
 
     public function test_Start()
     {
-        $this->addMockSubscriber(new \Guzzle\Http\Message\Response(202));
+        $this->addMockSubscriber(new \GuzzleHttp\Psr7\Response(202));
         $this->assertEquals(202, $this->server->start()->getStatusCode());
     }
 
     public function test_Stop()
     {
-        $this->addMockSubscriber(new \Guzzle\Http\Message\Response(202));
+        $this->addMockSubscriber(new \GuzzleHttp\Psr7\Response(202));
         $this->assertEquals(202, $this->server->stop()->getStatusCode());
     }
 

@@ -48,8 +48,8 @@ class UserTest extends IdentityTestCase
 
     public function test_Update()
     {
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->user->update(array('username' => 'foo')));
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->user->updatePassword('new'));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->user->update(array('username' => 'foo')));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->user->updatePassword('new'));
     }
 
     public function test_Get_Other_Credentials()
@@ -82,7 +82,7 @@ class UserTest extends IdentityTestCase
      */
     public function test_Get_Role()
     {
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $this->user->addRole(123));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $this->user->addRole(123));
     }
 
     public function test_Get_Roles()

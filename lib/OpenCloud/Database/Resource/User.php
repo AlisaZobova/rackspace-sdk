@@ -159,7 +159,7 @@ class User extends PersistentResource
      * @param []string $databases An array of one or more database names that this user will be granted access to. For
      *                            example, ['foo', 'bar'] or ['baz'] are valid inputs.
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function grantDbAccess(array $databases)
     {

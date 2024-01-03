@@ -108,7 +108,7 @@ class Service extends CatalogService
     public function listStacks(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Stack::resourceName())->setQuery($params);
+        $url = $url->addPath(Stack::resourceName())->addQuery($params);
 
         return $this->resourceList('Stack', $url);
     }
@@ -122,7 +122,7 @@ class Service extends CatalogService
     public function listResourceTypes(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().ResourceType::resourceName())->setQuery($params);
+        $url = $url->addPath(ResourceType::resourceName())->addQuery($params);
 
         return $this->resourceList('ResourceType', $url);
     }
@@ -158,7 +158,7 @@ class Service extends CatalogService
     public function validateTemplate(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'validate');
+        $url = $url->addPath('validate');
 
         // Aliases
         if (array_key_exists('templateUrl', $params)) {

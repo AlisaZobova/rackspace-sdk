@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\ObjectStore\Upload;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\ObjectStore\Resource\Container;
 use OpenCloud\ObjectStore\Upload\ContainerMigration;
 use OpenCloud\Tests\ObjectStore\ObjectStoreTestCase;

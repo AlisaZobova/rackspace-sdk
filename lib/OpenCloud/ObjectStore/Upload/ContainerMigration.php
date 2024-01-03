@@ -19,8 +19,8 @@ namespace OpenCloud\ObjectStore\Upload;
 
 use Guzzle\Batch\BatchBuilder;
 use Guzzle\Common\Collection;
-use Guzzle\Http\Message\Response;
-use Guzzle\Http\Url;
+use GuzzleHttp\Psr7\Response;
+
 use OpenCloud\ObjectStore\Resource\Container;
 
 /**

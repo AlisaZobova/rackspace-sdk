@@ -48,7 +48,7 @@ class ResourceType extends ReadOnlyResource
     public function getTemplate()
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'template');
+        $url = $url->addPath('template');
 
         $response = $this->getClient()->get($url)->send();
         return $response->getBody(true);

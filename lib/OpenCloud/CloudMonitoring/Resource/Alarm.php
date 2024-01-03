@@ -127,7 +127,7 @@ class Alarm extends AbstractResource
         $resource = $this->getService()->resource('NotificationHistory', null, $this);
 
         $url = clone $resource->getUrl();
-        $url->addPath($checkId)->addPath($uuid);
+        $url = $url->addPath($checkId)->addPath($uuid);
         $resource->refresh(null, $url);
 
         return $resource;

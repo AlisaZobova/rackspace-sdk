@@ -17,7 +17,7 @@
 
 namespace OpenCloud\Tests\ObjectStore\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Common\Constants\Size;
 use OpenCloud\Tests\ObjectStore\ObjectStoreTestCase;
 use OpenCloud\ObjectStore\Enum\ReturnType;
@@ -161,29 +161,29 @@ class ContainerTest extends ObjectStoreTestCase
         $container = $this->container;
 
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $container->enableLogging()
         );
 
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $container->disableLogging()
         );
 
         $this->setupCdnContainerMockResponse();
 
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $container->getCdn()->setStaticIndexPage('index.html')
         );
 
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $container->getCdn()->setStaticErrorPage('error.html')
         );
 
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $container->disableCdn()
         );
 
@@ -250,7 +250,7 @@ class ContainerTest extends ObjectStoreTestCase
         $responses = $container->uploadObjects(array(
             array('name' => 'test', 'body' => 'FOOBAR')
         ));
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $responses[0]);
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $responses[0]);
 
         $container->uploadObjects(array(
             array('name' => 'test', 'path' => $this->getFilePath())
@@ -276,17 +276,17 @@ class ContainerTest extends ObjectStoreTestCase
 
         $this->assertInstanceOf('OpenCloud\ObjectStore\Resource\DataObject', $dataObjects[0]);
         $this->assertEquals('test1', $dataObjects[0]->getName());
-        $this->assertInstanceOf('Guzzle\Http\EntityBody', $dataObjects[0]->getContent());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Stream', $dataObjects[0]->getContent());
         $this->assertEquals('FOOBAR', (string) $dataObjects[0]->getContent());
 
         $this->assertInstanceOf('OpenCloud\ObjectStore\Resource\DataObject', $dataObjects[1]);
         $this->assertEquals('test2', $dataObjects[1]->getName());
-        $this->assertInstanceOf('Guzzle\Http\EntityBody', $dataObjects[1]->getContent());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Stream', $dataObjects[1]->getContent());
         $this->assertEquals('BAZQUX', (string) $dataObjects[1]->getContent());
 
         $this->assertInstanceOf('OpenCloud\ObjectStore\Resource\DataObject', $dataObjects[2]);
         $this->assertEquals('test2', $dataObjects[2]->getName());
-        $this->assertInstanceOf('Guzzle\Http\EntityBody', $dataObjects[2]->getContent());
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Stream', $dataObjects[2]->getContent());
         $this->assertEquals('BARBAR', (string) $dataObjects[2]->getContent());
     }
 
@@ -370,8 +370,8 @@ class ContainerTest extends ObjectStoreTestCase
     {
         $container = $this->container;
 
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $container->setCountQuota(50));
-        $this->assertInstanceOf('Guzzle\Http\Message\Response', $container->setBytesQuota(50 * 1024));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $container->setCountQuota(50));
+        $this->assertInstanceOf('GuzzleHttp\Psr7\Response', $container->setBytesQuota(50 * 1024));
 
         $this->assertEquals(50, $container->getCountQuota());
         $this->assertEquals(50 * 1024, $container->getBytesQuota());

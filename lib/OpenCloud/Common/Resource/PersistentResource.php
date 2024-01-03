@@ -17,7 +17,6 @@
 
 namespace OpenCloud\Common\Resource;
 
-use Guzzle\Http\Url;
 use OpenCloud\Common\Constants\State;
 use OpenCloud\Common\Exceptions\CreateError;
 use OpenCloud\Common\Exceptions\DeleteError;
@@ -33,7 +32,7 @@ abstract class PersistentResource extends BaseResource
      * Create a new resource
      *
      * @param array $params
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function create($params = array())
     {
@@ -66,7 +65,7 @@ abstract class PersistentResource extends BaseResource
      * Update a resource
      *
      * @param array $params
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function update($params = array())
     {
@@ -86,7 +85,7 @@ abstract class PersistentResource extends BaseResource
     /**
      * Delete this resource
      *
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function delete()
     {
@@ -98,7 +97,7 @@ abstract class PersistentResource extends BaseResource
      *
      * @param null $id
      * @param null $url
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      * @throws IdRequiredError
      */
     public function refresh($id = null, $url = null)
@@ -140,7 +139,7 @@ abstract class PersistentResource extends BaseResource
     protected function refreshFromParent()
     {
         $url = clone $this->getParent()->getUrl();
-        $url->withPath($url->getPath().$this->resourceName());
+        $url = $url->addPath($this->resourceName());
 
         $response = $this->getClient()->get($url)->send();
 

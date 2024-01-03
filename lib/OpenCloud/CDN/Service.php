@@ -83,7 +83,7 @@ class Service extends CatalogService
         $params['limit'] = isset($params['limit']) && $params['limit'] <= self::MAX_LIMIT ?: self::MAX_LIMIT;
 
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().ServiceResource::resourceName())->setQuery($params);
+        $url = $url->addPath(ServiceResource::resourceName())->addQuery($params);
 
         return $this->resourceList('Service', $url);
     }
@@ -133,7 +133,7 @@ class Service extends CatalogService
     public function listFlavors(array $params = array())
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().Flavor::resourceName())->setQuery($params);
+        $url = $url->addPath(Flavor::resourceName())->addQuery($params);
 
         return $this->resourceList('Flavor', $url);
     }
@@ -159,12 +159,12 @@ class Service extends CatalogService
     /**
      * Returns the ping (status) response for the CDN service
      *
-     * @return Guzzle\Http\Message\Response
+     * @return GuzzleHttp\Psr7\Response
      */
     public function getPing()
     {
         $url = clone $this->getUrl();
-        $url->withPath($url->getPath().'ping');
+        $url = $url->addPath('ping');
 
         $request = $this->getClient()->get($url);
 

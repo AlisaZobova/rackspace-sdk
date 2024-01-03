@@ -66,7 +66,7 @@ class Service extends AbstractService
         if ($path) {
 
             // TODO withPath not found
-            $url = $url->withPath($url->getPath().$path);
+            $url = $url->addPath($path);
         }
 
         return $url;
@@ -108,18 +108,16 @@ class Service extends AbstractService
     {
         $url = $this->getUrl('users');
 
-        $existingQuery = $url->getQuery() ? $url->getQuery().'&' : '';
-
         switch ($mode) {
             default:
             case UserConst::MODE_NAME:
-                $url = $url->withQuery($existingQuery.Query::build(array('name' => $search)));
+                $url = $url->addQuery(array('name' => $search));
                 break;
             case UserConst::MODE_ID:
-                $url = $url->withPath($url->getPath().$search);
+                $url = $url->addPath($search);
                 break;
             case UserConst::MODE_EMAIL:
-                $url = $url->withQuery($existingQuery.Query::build(array('email' => $search)));
+                $url = $url->addQuery(array('email' => $search));
                 break;
         }
 
@@ -153,7 +151,7 @@ class Service extends AbstractService
         // TODO check path
         return PaginatedIterator::factory($this, array(
             'resourceClass'  => 'Role',
-            'baseUrl'        => $this->getUrl()->withPath($this->getUrl()->getPath().'OS-KSADM/roles'),
+            'baseUrl'        => $this->getUrl()->addPath('OS-KSADM/roles'),
             'key.marker'     => 'id',
             'key.collection' => 'roles'
         ));
@@ -180,7 +178,7 @@ class Service extends AbstractService
     public function generateToken($json, array $headers = array())
     {
         $url = $this->getUrl();
-        $url = $url->withPath($url->getPath().'tokens');
+        $url = $url->addPath('tokens');
 
         $headers += self::getJsonHeader();
 
@@ -191,7 +189,7 @@ class Service extends AbstractService
      * Revoke a given token based on its ID
      *
      * @param $tokenId string Token ID
-     * @return \Guzzle\Http\Message\Response
+     * @return \GuzzleHttp\Psr7\Response
      */
     public function revokeToken($tokenId)
     {
@@ -209,7 +207,7 @@ class Service extends AbstractService
     public function getTenants()
     {
         $url = $this->getUrl();
-        $url->withPath($url->getPath().'tenants');
+        $url = $url->addPath('tenants');
 
         $response = $this->getClient()->get($url)->send();
 

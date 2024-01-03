@@ -17,7 +17,7 @@
 
 namespace OpenCloud\ObjectStore\Resource;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use OpenCloud\Common\Base;
 use OpenCloud\Common\Http\Client;
 use OpenCloud\Common\Service\ServiceInterface;

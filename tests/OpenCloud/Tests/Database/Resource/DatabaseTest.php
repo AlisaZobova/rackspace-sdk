@@ -77,7 +77,7 @@ class DatabaseTest extends DatabaseTestCase
     public function testCreate()
     {
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $this->database->create(array('name' => 'FOOBAR'))
         );
     }
@@ -94,7 +94,7 @@ class DatabaseTest extends DatabaseTestCase
     {
         $this->database->name = 'FOOBAR';
         $this->assertInstanceOf(
-            'Guzzle\Http\Message\Response',
+            'GuzzleHttp\Psr7\Response',
             $this->database->delete()
         );
     }

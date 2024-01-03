@@ -18,7 +18,7 @@
 namespace OpenCloud\ObjectStore\Upload;
 
 use DirectoryIterator;
-use Guzzle\Http\EntityBody;
+use GuzzleHttp\Psr7;
 use OpenCloud\Common\Collection\ResourceIterator;
 use OpenCloud\Common\Exceptions\InvalidArgumentError;
 use OpenCloud\ObjectStore\Resource\Container;
@@ -131,7 +131,7 @@ class DirectorySync
                 continue;
             }
 
-            $entities[] = $entityBody = EntityBody::factory(fopen($filePath, 'r+'));
+            $entities[] = $entityBody = Psr7\Utils::streamFor(fopen($filePath, 'r+'));
 
             if (false !== ($remoteFile = $this->remoteFiles->search($callback))) {
                 // if different, upload updated version
@@ -145,7 +145,7 @@ class DirectorySync
             } else {
                 // upload new file
                 $url = clone $this->container->getUrl();
-                $url->withPath($url->getPath().$remoteFilename);
+                $url = $url->addPath($remoteFilename);
 
                 $requests[] = $this->container->getClient()->put($url, array(), $entityBody);
             }

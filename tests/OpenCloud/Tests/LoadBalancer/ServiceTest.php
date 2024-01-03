@@ -27,7 +27,7 @@
 
 namespace OpenCloud\Tests\LoadBalancer;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Psr7\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
 use OpenCloud\Rackspace;
 use OpenCloud\Tests\MockSubscriber;
