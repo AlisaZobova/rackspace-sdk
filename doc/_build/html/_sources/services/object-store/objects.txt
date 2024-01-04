@@ -222,7 +222,7 @@ Get content of file
 
 .. code-block:: php
 
-  /** @param $content Guzzle\Http\EntityBody */
+  /** @param $content GuzzleHttp\Psr7\Stream */
   $content = $object->getContainer();
 
 

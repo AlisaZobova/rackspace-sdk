@@ -546,7 +546,7 @@ container and name.
 
     $objectContent = $object->getContent();
 
-    /** @var $objectContent Guzzle\Http\EntityBody **/
+    /** @var $objectContent GuzzleHttp\Psr7\Stream **/
 
     // Write object content to file on local filesystem.
     $objectContent->rewind();
@@ -561,7 +561,7 @@ In the example above, ``$object`` is the object named
 ``php-elephant.jpg`` in the container represented by ``$container``.
 Further, ``$objectContent`` represents the contents of the object. It is
 of type
-```Guzzle\Http\EntityBody`` <http://api.guzzlephp.org/class-Guzzle.Http.EntityBody.html>`__.
+```GuzzleHttp\Psr7\Stream`` <http://api.guzzlephp.org/class-Guzzle.Http.Stream.html>`__.
 
 Retrieve Object Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~

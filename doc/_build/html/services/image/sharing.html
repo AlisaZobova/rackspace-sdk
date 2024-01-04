@@ -6,34 +6,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>Sharing images &mdash; php-opencloud 1.12.1 documentation</title>
-  
 
-  
-  
 
-  
+
+
+
+
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  
-  
-    
 
-  
 
-  
-  
+
+
+
+
+
+
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
 
-  
+
+
     <link rel="top" title="php-opencloud 1.12.1 documentation" href="../../index.html"/>
         <link rel="up" title="Images v1" href="index.html"/>
         <link rel="next" title="Image tags" href="tags.html"/>
-        <link rel="prev" title="JSON schemas" href="schemas.html"/> 
+        <link rel="prev" title="JSON schemas" href="schemas.html"/>
 
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
@@ -42,7 +42,7 @@
 
   <div class="wy-grid-for-nav">
 
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         <a href="../../index.html" class="fa fa-home"> php-opencloud</a>
@@ -56,8 +56,8 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
+
+
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../autoscale/index.html">Auto Scale v2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autoscale/index.html#setup">Setup</a></li>
@@ -190,40 +190,40 @@
 </li>
 </ul>
 
-        
+
       </div>
       &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
         <a href="../../index.html">php-opencloud</a>
       </nav>
 
 
-      
+
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+
           <li><a href="index.html">Images v1</a> &raquo;</li>
-      
+
     <li>Sharing images</li>
       <li class="wy-breadcrumbs-aside">
-        
+
           <a href="../../_sources/services/image/sharing.txt" rel="nofollow"> View page source</a>
-        
+
       </li>
   </ul>
   <hr/>
 </div>
           <div role="main">
-            
+
   <div class="section" id="sharing-images">
 <h1>Sharing images<a class="headerlink" href="#sharing-images" title="Permalink to this headline">¶</a></h1>
 <p>Images can be created and deleted by image producers, updated by image
@@ -318,7 +318,7 @@ need to set one up first:</p>
 <div class="section" id="create-image-member">
 <h2>Create image member<a class="headerlink" href="#create-image-member" title="Permalink to this headline">¶</a></h2>
 <p>This operation is only available for producers.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="sd">/** @param $response Guzzle\Http\Message\Response */</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="sd">/** @param $response GuzzleHttp\Psr7\Response */</span>
 <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$image</span><span class="o">-&gt;</span><span class="na">createMember</span><span class="p">(</span><span class="s1">&#39;{tenantId}&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -352,16 +352,16 @@ class.</p>
 
           </div>
           <footer>
-  
+
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
+
         <a href="tags.html" class="btn btn-neutral float-right" title="Image tags"/>Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
+
+
         <a href="schemas.html" class="btn btn-neutral" title="JSON schemas"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+
     </div>
-  
+
 
   <hr/>
 
@@ -379,10 +379,10 @@ class.</p>
     </section>
 
   </div>
-  
 
 
-  
+
+
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
@@ -397,21 +397,21 @@ class.</p>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
 
-  
 
-  
-  
+
+
+
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
 
-  
-  
+
+
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+
 
 </body>
 </html>

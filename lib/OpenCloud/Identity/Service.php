@@ -65,7 +65,7 @@ class Service extends AbstractService
 
         if ($path) {
 
-            // TODO withPath not found
+            // TODO addPath not found
             $url = $url->addPath($path);
         }
 

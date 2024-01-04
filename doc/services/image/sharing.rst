@@ -92,7 +92,7 @@ This operation is only available for producers.
 
 .. code-block:: php
 
-  /** @param $response Guzzle\Http\Message\Response */
+  /** @param $response GuzzleHttp\Psr7\Response */
   $response = $image->createMember('{tenantId}');
 
 

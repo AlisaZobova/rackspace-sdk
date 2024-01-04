@@ -14,7 +14,7 @@ To do this, and then generate a token:
 
   $json = $client->getCredentials();
 
-  /** @var $response Guzzle\Http\Message\Response */
+  /** @var $response GuzzleHttp\Psr7\Response */
   $response = $service->generateToken($json);
   $jsonBody = $response->json();
 

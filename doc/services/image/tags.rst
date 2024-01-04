@@ -17,7 +17,7 @@ Add image tag
 
 .. code-block:: php
 
-  /** @param $response Guzzle\Http\Message\Response */
+  /** @param $response GuzzleHttp\Psr7\Response */
   $response = $image->addTag('jamie_dev');
 
 Delete image tag
@@ -25,5 +25,5 @@ Delete image tag
 
 .. code-block:: php
 
-  /** @param $response Guzzle\Http\Message\Response */
+  /** @param $response GuzzleHttp\Psr7\Response */
   $response = $image->deleteTag('jamie_dev');

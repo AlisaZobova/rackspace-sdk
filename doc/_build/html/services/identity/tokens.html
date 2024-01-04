@@ -6,34 +6,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>Tokens &mdash; php-opencloud 1.12.1 documentation</title>
-  
 
-  
-  
 
-  
+
+
+
+
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  
-  
-    
 
-  
 
-  
-  
+
+
+
+
+
+
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
 
-  
+
+
     <link rel="top" title="php-opencloud 1.12.1 documentation" href="../../index.html"/>
         <link rel="up" title="Identity v2" href="index.html"/>
         <link rel="next" title="Users" href="users.html"/>
-        <link rel="prev" title="Identity v2" href="index.html"/> 
+        <link rel="prev" title="Identity v2" href="index.html"/>
 
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
@@ -42,7 +42,7 @@
 
   <div class="wy-grid-for-nav">
 
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         <a href="../../index.html" class="fa fa-home"> php-opencloud</a>
@@ -56,8 +56,8 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
+
+
             <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../autoscale/index.html">Auto Scale v2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autoscale/index.html#setup">Setup</a></li>
@@ -190,40 +190,40 @@
 </li>
 </ul>
 
-        
+
       </div>
       &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
         <a href="../../index.html">php-opencloud</a>
       </nav>
 
 
-      
+
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+
           <li><a href="index.html">Identity v2</a> &raquo;</li>
-      
+
     <li>Tokens</li>
       <li class="wy-breadcrumbs-aside">
-        
+
           <a href="../../_sources/services/identity/tokens.txt" rel="nofollow"> View page source</a>
-        
+
       </li>
   </ul>
   <hr/>
 </div>
           <div role="main">
-            
+
   <div class="section" id="tokens">
 <h1>Tokens<a class="headerlink" href="#tokens" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="create-token-authenticate">
@@ -234,7 +234,7 @@ slightly different entity body than OpenStack Keystone.</p>
 <p>To do this, and then generate a token:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="nv">$json</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">getCredentials</span><span class="p">();</span>
 
-<span class="sd">/** @var $response Guzzle\Http\Message\Response */</span>
+<span class="sd">/** @var $response GuzzleHttp\Psr7\Response */</span>
 <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$service</span><span class="o">-&gt;</span><span class="na">generateToken</span><span class="p">(</span><span class="nv">$json</span><span class="p">);</span>
 <span class="nv">$jsonBody</span> <span class="o">=</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">json</span><span class="p">();</span>
 </pre></div>
@@ -314,16 +314,16 @@ which accompanies this guide.</p>
 
           </div>
           <footer>
-  
+
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
+
         <a href="users.html" class="btn btn-neutral float-right" title="Users"/>Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
+
+
         <a href="index.html" class="btn btn-neutral" title="Identity v2"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+
     </div>
-  
+
 
   <hr/>
 
@@ -341,10 +341,10 @@ which accompanies this guide.</p>
     </section>
 
   </div>
-  
 
 
-  
+
+
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
@@ -359,21 +359,21 @@ which accompanies this guide.</p>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
 
-  
 
-  
-  
+
+
+
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
 
-  
-  
+
+
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+
 
 </body>
 </html>

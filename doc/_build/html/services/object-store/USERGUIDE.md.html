@@ -6,31 +6,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>The Complete User Guide to the Object Store Service &mdash; php-opencloud 1.12.1 documentation</title>
-  
 
-  
-  
 
-  
+
+
+
+
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  
-  
-    
 
-  
 
-  
-  
+
+
+
+
+
+
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  
 
-  
-    <link rel="top" title="php-opencloud 1.12.1 documentation" href="../../index.html"/> 
 
-  
+
+    <link rel="top" title="php-opencloud 1.12.1 documentation" href="../../index.html"/>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
@@ -39,7 +39,7 @@
 
   <div class="wy-grid-for-nav">
 
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
         <a href="../../index.html" class="fa fa-home"> php-opencloud</a>
@@ -53,8 +53,8 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
+
+
             <ul>
 <li class="toctree-l1"><a class="reference internal" href="../autoscale/index.html">Auto Scale v2</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autoscale/index.html#setup">Setup</a></li>
@@ -89,38 +89,38 @@
 </li>
 </ul>
 
-        
+
       </div>
       &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
         <a href="../../index.html">php-opencloud</a>
       </nav>
 
 
-      
+
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
-      
+
     <li>The Complete User Guide to the Object Store Service</li>
       <li class="wy-breadcrumbs-aside">
-        
+
           <a href="../../_sources/services/object-store/USERGUIDE.md.txt" rel="nofollow"> View page source</a>
-        
+
       </li>
   </ul>
   <hr/>
 </div>
           <div role="main">
-            
+
   <div class="section" id="the-complete-user-guide-to-the-object-store-service">
 <h1>The Complete User Guide to the Object Store Service<a class="headerlink" href="#the-complete-user-guide-to-the-object-store-service" title="Permalink to this headline">¶</a></h1>
 <p><strong>Object Store</strong> is an object-based storage system that stores content
@@ -671,7 +671,7 @@ $object = $container-&gt;getObject($objectName);
 
 $objectContent = $object-&gt;getContent();
 
-/** @var $objectContent Guzzle\Http\EntityBody **/
+/** @var $objectContent GuzzleHttp\Psr7\Stream **/
 
 // Write object content to file on local filesystem.
 $objectContent-&gt;rewind();
@@ -686,7 +686,7 @@ example</a> ]</p>
 <tt class="docutils literal"><span class="pre">php-elephant.jpg</span></tt> in the container represented by <tt class="docutils literal"><span class="pre">$container</span></tt>.
 Further, <tt class="docutils literal"><span class="pre">$objectContent</span></tt> represents the contents of the object. It is
 of type
-<tt class="docutils literal"><span class="pre">`Guzzle\Http\EntityBody</span></tt> &lt;<a class="reference external" href="http://api.guzzlephp.org/class-Guzzle.Http.EntityBody.html">http://api.guzzlephp.org/class-Guzzle.Http.EntityBody.html</a>&gt;`__.</p>
+<tt class="docutils literal"><span class="pre">`GuzzleHttp\Psr7\Stream</span></tt> &lt;<a class="reference external" href="http://api.guzzlephp.org/class-Guzzle.Http.Stream.html">http://api.guzzlephp.org/class-Guzzle.Http.Stream.html</a>&gt;`__.</p>
 </div>
 <div class="section" id="retrieve-object-metadata">
 <h3>Retrieve Object Metadata<a class="headerlink" href="#retrieve-object-metadata" title="Permalink to this headline">¶</a></h3>
@@ -958,7 +958,7 @@ used, in bytes, by the account represented by <tt class="docutils literal"><span
 
           </div>
           <footer>
-  
+
 
   <hr/>
 
@@ -976,10 +976,10 @@ used, in bytes, by the account represented by <tt class="docutils literal"><span
     </section>
 
   </div>
-  
 
 
-  
+
+
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
@@ -994,21 +994,21 @@ used, in bytes, by the account represented by <tt class="docutils literal"><span
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>
 
-  
 
-  
-  
+
+
+
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
 
-  
-  
+
+
+
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-   
+
 
 </body>
 </html>
