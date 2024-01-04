@@ -612,12 +612,12 @@ class OpenStack extends Client
      *
      * @param string $url    New base url
      *
-     * @return \GuzzleHttp\Client
+     * @return void
      */
     public function setBaseUrl(string $url)
     {
         // TODO find way without construct
         $this->clientConfigs['base_uri'] = $url;
-        return parent::__construct($this->clientConfigs);
+        parent::__construct($this->clientConfigs);
     }
 }
